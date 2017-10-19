@@ -28,7 +28,7 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanelPlanoDeFundoDados" max="32767" attributes="0"/>
-                  <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" pref="430" max="32767" attributes="0"/>
                   <Group type="102" attributes="0">
                       <Component id="jButtonNovo" min="-2" pref="80" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
@@ -45,7 +45,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" min="-2" pref="130" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="200" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButtonNovo" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -70,11 +70,12 @@
         <Component class="javax.swing.JTable" name="jTableTabelaClientes">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="7" rowCount="0">
+              <Table columnCount="8" rowCount="0">
                 <Column editable="false" title="Id" type="java.lang.Integer"/>
                 <Column editable="false" title="Nome" type="java.lang.String"/>
                 <Column editable="false" title="Sobrenome" type="java.lang.String"/>
-                <Column editable="false" title="Data de Nas&#xe7;." type="java.lang.Object"/>
+                <Column editable="false" title="CPF" type="java.lang.String"/>
+                <Column editable="false" title="Data de Nas&#xe7;." type="java.lang.String"/>
                 <Column editable="false" title="Telefone" type="java.lang.String"/>
                 <Column editable="false" title="Endere&#xe7;o" type="java.lang.String"/>
                 <Column editable="false" title="Sexo" type="java.lang.String"/>
@@ -82,6 +83,11 @@
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                  <Title/>
+                  <Editor/>
+                  <Renderer/>
+                </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
@@ -174,6 +180,7 @@
                       <Component id="jLabelEndereco" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelSexo" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabelDataDeNasc" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelCpf" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -189,11 +196,14 @@
                       </Group>
                       <Component id="jTextFieldNome" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="jTextFieldSobrenome" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
-                      <Component id="jTextFieldTelefone" alignment="0" min="-2" pref="90" max="-2" attributes="0"/>
                       <Component id="jTextFieldEndereco" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                      <Component id="jTextFieldDataDeNasc" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                      <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jFormattedTextDataNasc" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jFormattedTextTelefone" alignment="0" pref="120" max="32767" attributes="0"/>
+                          <Component id="jFormattedTextFieldCpf" alignment="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace pref="121" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -211,13 +221,18 @@
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jLabelCpf" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jFormattedTextFieldCpf" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelDataDeNasc" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldDataDeNasc" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jFormattedTextDataNasc" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabelTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jTextFieldTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jFormattedTextTelefone" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -258,8 +273,6 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Telefone:"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldTelefone">
         </Component>
         <Component class="javax.swing.JLabel" name="jLabelEndereco">
           <Properties>
@@ -310,7 +323,31 @@
             <Property name="text" type="java.lang.String" value="Data de Nasc.:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextFieldDataDeNasc">
+        <Component class="javax.swing.JLabel" name="jLabelCpf">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="CPF:"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextFieldCpf">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="###.###.###-##" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextTelefone">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="(##) #####-####" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JFormattedTextField" name="jFormattedTextDataNasc">
+          <Properties>
+            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
+              <Format format="##/##/####" subtype="-1" type="5"/>
+            </Property>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

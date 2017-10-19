@@ -5,6 +5,7 @@ public class ClientesBEAN {
     private int id;
     private String nome;
     private String sobrenome;
+    private String CPF;        
     private String dataNasc;
     private String telefone;
     private String endereco;
@@ -14,10 +15,11 @@ public class ClientesBEAN {
     public ClientesBEAN() {
     }
 
-    public ClientesBEAN(int id, String nome, String sobrenome, String dataNasc, String telefone, String endereco, String sexo, boolean ativo) {
+    public ClientesBEAN(int id, String nome, String sobrenome, String CPF, String dataNasc, String telefone, String endereco, String sexo, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.sobrenome = sobrenome;
+        this.CPF = CPF;
         this.dataNasc = dataNasc;
         this.telefone = telefone;
         this.endereco = endereco;
@@ -65,6 +67,20 @@ public class ClientesBEAN {
      */
     public void setSobrenome(String sobrenome) {
         this.sobrenome = sobrenome;
+    }
+
+    /**
+     * @return the CPF
+     */
+    public String getCPF() {
+        return CPF;
+    }
+
+    /**
+     * @param CPF the CPF to set
+     */
+    public void setCPF(String CPF) {
+        this.CPF = CPF;
     }
 
     /**
@@ -136,7 +152,5 @@ public class ClientesBEAN {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
-    
     
 }
