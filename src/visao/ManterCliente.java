@@ -295,9 +295,9 @@ public class ManterCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        
+
         int index = this.jTableTabelaClientes.getSelectedRow();
-        
+
         String s = null;
         if (this.jRadioButtonFemenino.isSelected()) {
             s = "Femenino";
@@ -316,7 +316,11 @@ public class ManterCliente extends javax.swing.JFrame {
                 true);
 
         if (modo.equals("Novo")) {
-            tabelaClienteModelo.adicionaCliente(c);
+            if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
+                tabelaClienteModelo.adicionaCliente(c);
+            } else {
+                JOptionPane.showMessageDialog(null, Mensagens._001());
+            }
         } else if (modo.equals("Editar")) {
             tabelaClienteModelo.setValueAt(c, index);
         }
@@ -422,6 +426,20 @@ public class ManterCliente extends javax.swing.JFrame {
             default:
                 break;
         }
+    }
+
+    private boolean verificaRadioButtonSelecionado() {
+        return this.jRadioButtonFemenino.isSelected() || this.jRadioButtonMasculino.isSelected();
+    }
+
+    private boolean verificaCamposPreenchidos() {
+        return !(this.jTextFieldNome.getText().isEmpty() && this.jTextFieldSobrenome.getText().isEmpty() && this.jTextFieldEndereco.getText().isEmpty());
+    }
+
+    private boolean verificaCamposFormatadosPreenchidos() {
+        return !(this.jFormattedTextFieldCpf.getText().equals("   .   .   -  ") && 
+                 this.jFormattedTextDataNasc.getText().equals("  /  /    ") && 
+                 this.jFormattedTextTelefone.getText().equals("(  )      -    "));
     }
 
     private void habilitaCampoDados(boolean flag) {
