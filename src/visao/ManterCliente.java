@@ -1,8 +1,10 @@
 package visao;
 
+import modelo.CPF;
 import javax.swing.JOptionPane;
 import modelo.TableModelCliente;
 import modelo.ClientesBEAN;
+import modelo.Data;
 import modelo.Mensagens;
 
 public class ManterCliente extends javax.swing.JFrame {
@@ -282,7 +284,7 @@ public class ManterCliente extends javax.swing.JFrame {
         modo = "Navegacao";
         manipulaInterface(modo);
         int index = this.jTableTabelaClientes.getSelectedRow();
-        int i = JOptionPane.showConfirmDialog(null, Mensagens._002() + tabelaClienteModelo.getValueAt(index, 1) + " " + tabelaClienteModelo.getValueAt(index, 2) + "?");
+        int i = JOptionPane.showConfirmDialog(rootPane, Mensagens._002() + tabelaClienteModelo.getValueAt(index, 1) + " " + tabelaClienteModelo.getValueAt(index, 2) + "?");
         if (i != JOptionPane.YES_OPTION) {
             if (i == JOptionPane.NO_OPTION) {
 
@@ -314,17 +316,49 @@ public class ManterCliente extends javax.swing.JFrame {
                 this.jTextFieldEndereco.getText(),
                 s,
                 true);
+                                                                     
+        CPF cpf = new CPF(this.jFormattedTextFieldCpf.getText());
+        Data dataNasc = new Data(this.jFormattedTextDataNasc.getText() + " " + "00:00", Data.BarraComHora);
+        Data hoje = new Data();
 
-        if (modo.equals("Novo")) {
-            if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
-                tabelaClienteModelo.adicionaCliente(c);
-            } else {
-                JOptionPane.showMessageDialog(null, Mensagens._001());
+        if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
+            if (modo.equals("Novo")) {
+                if (cpf.isCPF()) {
+                    if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
+                        tabelaClienteModelo.adicionaCliente(c);
+                        limpaCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, Mensagens._004());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, Mensagens._003());
+                }
+            } else if (modo.equals("Editar")) {
+                if (cpf.isCPF()) {
+                    if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
+                        tabelaClienteModelo.setValueAt(c, index);
+                        limpaCampos();
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, Mensagens._004());
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, Mensagens._003());
+                }
             }
-        } else if (modo.equals("Editar")) {
-            tabelaClienteModelo.setValueAt(c, index);
+        } else {
+            JOptionPane.showMessageDialog(rootPane, Mensagens._001());
         }
 
+        // Caso não queira validação de CPF e Data
+//        if (modo.equals("Novo")) {
+//            if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
+//                tabelaClienteModelo.adicionaCliente(c);
+//            } else {
+//                JOptionPane.showMessageDialog(rootPane, Mensagens._001());
+//            }
+//        } else if (modo.equals("Editar")) {
+//            tabelaClienteModelo.setValueAt(c, index);
+//        }
 
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -437,9 +471,9 @@ public class ManterCliente extends javax.swing.JFrame {
     }
 
     private boolean verificaCamposFormatadosPreenchidos() {
-        return !(this.jFormattedTextFieldCpf.getText().equals("   .   .   -  ") && 
-                 this.jFormattedTextDataNasc.getText().equals("  /  /    ") && 
-                 this.jFormattedTextTelefone.getText().equals("(  )      -    "));
+        return !(this.jFormattedTextFieldCpf.getText().equals("   .   .   -  ")
+                && this.jFormattedTextDataNasc.getText().equals("  /  /    ")
+                && this.jFormattedTextTelefone.getText().equals("(  )      -    "));
     }
 
     private void habilitaCampoDados(boolean flag) {

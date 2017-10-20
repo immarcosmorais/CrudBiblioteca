@@ -19,4 +19,22 @@ public abstract class Mensagens {
     public static String _002(){
         return "Deseja escluir DEFINITIVAMENTE o Cliente: ";
     }
+    
+    /**
+     * 
+     * @return
+     * CPF invalido!
+     */
+    public static String _003() {
+        return "CPF invalido!";
+    }
+    
+    /**
+     * 
+     * @return
+     * Data invalida! Data futura
+     */
+    public static String _004() {
+        return "Data invalida! Data futura";
+    }
 }
