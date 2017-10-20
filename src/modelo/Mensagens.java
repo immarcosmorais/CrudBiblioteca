@@ -14,9 +14,9 @@ public abstract class Mensagens {
     /**
      * 
      * @return 
-     * Deseja escluir o Cliente: 
+     * Deseja escluir DEFINITIVAMENTE o Cliente: 
      */
     public static String _002(){
-        return "Deseja escluir o Cliente: ";
+        return "Deseja escluir DEFINITIVAMENTE o Cliente: ";
     }
 }

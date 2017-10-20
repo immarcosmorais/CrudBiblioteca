@@ -8,14 +8,14 @@ import modelo.Mensagens;
 public class ManterCliente extends javax.swing.JFrame {
 
     String modo;
-    TableModelCliente modelo;
+    TableModelCliente tabelaClienteModelo;
 
     public ManterCliente() {
         initComponents();
         modo = "Navegacao";
         setLocationRelativeTo(null);
-        modelo = new TableModelCliente();
-        this.jTableTabelaClientes.setModel(modelo);
+        tabelaClienteModelo = new TableModelCliente();
+        this.jTableTabelaClientes.setModel(tabelaClienteModelo);
         manipulaInterface(modo);
     }
 
@@ -282,38 +282,43 @@ public class ManterCliente extends javax.swing.JFrame {
         modo = "Navegacao";
         manipulaInterface(modo);
         int index = this.jTableTabelaClientes.getSelectedRow();
-        int i = JOptionPane.showConfirmDialog(null, Mensagens._002() + modelo.getValueAt(index, 1) + " " + modelo.getValueAt(index, 2) + "?");
-        if (i == JOptionPane.YES_OPTION) {
-            if (index > -1) {
-                modelo.removeCliente(index);
-            }
-        } else if (i == JOptionPane.NO_OPTION) {
+        int i = JOptionPane.showConfirmDialog(null, Mensagens._002() + tabelaClienteModelo.getValueAt(index, 1) + " " + tabelaClienteModelo.getValueAt(index, 2) + "?");
+        if (i != JOptionPane.YES_OPTION) {
+            if (i == JOptionPane.NO_OPTION) {
 
+            }
+        } else {
+            if (index > -1) {
+                tabelaClienteModelo.removeCliente(index);
+            }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        
+        int index = this.jTableTabelaClientes.getSelectedRow();
+        
+        String s = null;
+        if (this.jRadioButtonFemenino.isSelected()) {
+            s = "Femenino";
+        } else {
+            s = "Masculino";
+        }
+
+        ClientesBEAN c = new ClientesBEAN(0,
+                this.jTextFieldNome.getText(),
+                this.jTextFieldSobrenome.getText(),
+                this.jFormattedTextFieldCpf.getText(),
+                this.jFormattedTextDataNasc.getText(),
+                this.jFormattedTextTelefone.getText(),
+                this.jTextFieldEndereco.getText(),
+                s,
+                true);
 
         if (modo.equals("Novo")) {
-            String s = null;
-            if (this.jRadioButtonFemenino.isSelected()) {
-                s = "Femenino";
-            } else {
-                s = "Masculino";
-            }
-
-            ClientesBEAN c = new ClientesBEAN(0,
-                    this.jTextFieldNome.getText(),
-                    this.jTextFieldSobrenome.getText(),
-                    this.jFormattedTextFieldCpf.getText(),
-                    this.jFormattedTextDataNasc.getText(),
-                    this.jFormattedTextTelefone.getText(),
-                    this.jTextFieldEndereco.getText(),
-                    s,
-                    true);
-            modelo.adicionaCliente(c);
+            tabelaClienteModelo.adicionaCliente(c);
         } else if (modo.equals("Editar")) {
-
+            tabelaClienteModelo.setValueAt(c, index);
         }
 
 
@@ -328,16 +333,16 @@ public class ManterCliente extends javax.swing.JFrame {
 
         int index = this.jTableTabelaClientes.getSelectedRow();
 
-        if (index > -1 && index < this.modelo.getRowCount()) {
+        if (index > -1 && index < this.tabelaClienteModelo.getRowCount()) {
             modo = "Selecao";
             manipulaInterface(modo);
 
-            this.jTextFieldNome.setText((String) modelo.getValueAt(index, 1));
-            this.jTextFieldSobrenome.setText((String) modelo.getValueAt(index, 2));
-            this.jFormattedTextFieldCpf.setText((String) modelo.getValueAt(index, 3));
-            this.jFormattedTextDataNasc.setText((String) modelo.getValueAt(index, 4));
-            this.jFormattedTextTelefone.setText((String) modelo.getValueAt(index, 5));
-            this.jTextFieldEndereco.setText((String) modelo.getValueAt(index, 6));
+            this.jTextFieldNome.setText((String) tabelaClienteModelo.getValueAt(index, 1));
+            this.jTextFieldSobrenome.setText((String) tabelaClienteModelo.getValueAt(index, 2));
+            this.jFormattedTextFieldCpf.setText((String) tabelaClienteModelo.getValueAt(index, 3));
+            this.jFormattedTextDataNasc.setText((String) tabelaClienteModelo.getValueAt(index, 4));
+            this.jFormattedTextTelefone.setText((String) tabelaClienteModelo.getValueAt(index, 5));
+            this.jTextFieldEndereco.setText((String) tabelaClienteModelo.getValueAt(index, 6));
 
         }
 

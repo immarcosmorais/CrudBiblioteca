@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 public class TableModelCliente extends AbstractTableModel {
-    
+
     private ArrayList<ClientesBEAN> linhas;
     private final String[] colunas = new String[]{"Id", "Nome", "Sobrenome", "CPF", "Data Nasç.", "Telefone", "Endereço", "Sexo"};
 
@@ -21,27 +21,42 @@ public class TableModelCliente extends AbstractTableModel {
     public TableModelCliente(ArrayList<ClientesBEAN> linhas) {
         this.linhas = linhas;
     }
-    
-    public void adicionaCliente(ClientesBEAN c){
+
+    public void adicionaCliente(ClientesBEAN c) {
         this.linhas.add(c);
         fireTableDataChanged();
     }
-    
-    public void removeCliente(int linha){
+
+    public void removeCliente(int linha) {
         this.linhas.remove(linha);
         fireTableDataChanged();
         //fireTableRowsDeleted(linha, linha);
     }
-    
-    public ClientesBEAN getCleinte (int linha){
-        return this.linhas.get(linha); 
+
+    public ClientesBEAN getCleinte(int linha) {
+        return this.linhas.get(linha);
     }
 
-    @Override
-    public void setValueAt(Object o, int i, int i1) {
-        super.setValueAt(o, i, i1); //To change body of generated methods, choose Tools | Templates.
+    public void setValueAt(ClientesBEAN aValue, int rowIndex) {
+
+        linhas.get(rowIndex).setCPF(aValue.getCPF());
+        linhas.get(rowIndex).setDataNasc(aValue.getDataNasc());
+        linhas.get(rowIndex).setEndereco(aValue.getEndereco());
+        linhas.get(rowIndex).setNome(aValue.getNome());
+        linhas.get(rowIndex).setSexo(aValue.getSexo());
+        linhas.get(rowIndex).setSobrenome(aValue.getSobrenome());
+        linhas.get(rowIndex).setTelefone(aValue.getTelefone());
+
+        fireTableCellUpdated(rowIndex, 0);
+        fireTableCellUpdated(rowIndex, 1);
+        fireTableCellUpdated(rowIndex, 2);
+        fireTableCellUpdated(rowIndex, 3);
+        fireTableCellUpdated(rowIndex, 4);
+        fireTableCellUpdated(rowIndex, 5);
+        fireTableCellUpdated(rowIndex, 6);
+        fireTableCellUpdated(rowIndex, 7);
     }
-    
+
     @Override
     public int getRowCount() {
         return this.linhas.size();
@@ -49,13 +64,13 @@ public class TableModelCliente extends AbstractTableModel {
 
     @Override
     public int getColumnCount() {
-       return colunas.length;
+        return colunas.length;
     }
 
     @Override
     public Object getValueAt(int linha, int coluna) {
-        
-        switch(coluna){
+
+        switch (coluna) {
             case 0:
                 return this.linhas.get(linha).getId();
             case 1:
@@ -75,14 +90,14 @@ public class TableModelCliente extends AbstractTableModel {
             default:
                 return -1;
         }
-        
+
     }
 
     @Override
     public String getColumnName(int coluna) {
-        
+
         return colunas[coluna];
-        
+
     }
-    
+
 }
