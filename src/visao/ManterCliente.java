@@ -1,23 +1,21 @@
 package visao;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import modelo.TableModelCliente;
 import modelo.ClientesBEAN;
 import modelo.Mensagens;
 
 public class ManterCliente extends javax.swing.JFrame {
 
-    ArrayList<ClientesBEAN> listaClientes;
     String modo;
+    TableModelCliente modelo;
 
     public ManterCliente() {
         initComponents();
         modo = "Navegacao";
         setLocationRelativeTo(null);
-        this.listaClientes = new ArrayList<>();
+        modelo = new TableModelCliente();
+        this.jTableTabelaClientes.setModel(modelo);
         manipulaInterface(modo);
     }
 
@@ -284,75 +282,40 @@ public class ManterCliente extends javax.swing.JFrame {
         modo = "Navegacao";
         manipulaInterface(modo);
         int index = this.jTableTabelaClientes.getSelectedRow();
-        int i = JOptionPane.showConfirmDialog(null, Mensagens._002() + listaClientes.get(index).getNome() + " " + listaClientes.get(index).getSobrenome() + "?");
-        if(i == JOptionPane.YES_OPTION){
-            if(index > -1){
-                listaClientes.remove(index);
-                carregaTabela();
+        int i = JOptionPane.showConfirmDialog(null, Mensagens._002() + modelo.getValueAt(index, 1) + " " + modelo.getValueAt(index, 2) + "?");
+        if (i == JOptionPane.YES_OPTION) {
+            if (index > -1) {
+                modelo.removeCliente(index);
             }
-        }else if(i == JOptionPane.NO_OPTION){
-            
+        } else if (i == JOptionPane.NO_OPTION) {
+
         }
-        
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        
+
         if (modo.equals("Novo")) {
-
             String s = null;
-
-            if ((this.jRadioButtonFemenino.isSelected() || this.jRadioButtonMasculino.isSelected())
-
-                    && (this.jFormattedTextDataNasc.getText() != null
-                    && this.jTextFieldEndereco.getText() != null
-                    && this.jTextFieldNome.getText() != null
-                    && this.jFormattedTextFieldCpf.getText() != null
-                    && this.jTextFieldSobrenome.getText() != null
-                    && this.jFormattedTextTelefone.getText() != null)) {
-
-                if (this.jRadioButtonFemenino.isSelected()) {
-                    s = "Femenino";
-                } else {
-                    s = "Masculino";
-                }
-
-                ClientesBEAN c = new ClientesBEAN(0,
-                        this.jTextFieldNome.getText(),
-                        this.jTextFieldSobrenome.getText(),
-                        this.jFormattedTextFieldCpf.getText(),
-                        this.jFormattedTextDataNasc.getText(),
-                        this.jFormattedTextTelefone.getText(),
-                        this.jTextFieldEndereco.getText(),
-                        s,
-                        true);
-
-                listaClientes.add(c);
-                limpaCampos();
-                carregaTabela();
-                modo = "Navegacao";
-                manipulaInterface(modo);
-                
+            if (this.jRadioButtonFemenino.isSelected()) {
+                s = "Femenino";
             } else {
-                JOptionPane.showMessageDialog(null, Mensagens._001());
+                s = "Masculino";
             }
 
+            ClientesBEAN c = new ClientesBEAN(0,
+                    this.jTextFieldNome.getText(),
+                    this.jTextFieldSobrenome.getText(),
+                    this.jFormattedTextFieldCpf.getText(),
+                    this.jFormattedTextDataNasc.getText(),
+                    this.jFormattedTextTelefone.getText(),
+                    this.jTextFieldEndereco.getText(),
+                    s,
+                    true);
+            modelo.adicionaCliente(c);
         } else if (modo.equals("Editar")) {
-            int index = this.jTableTabelaClientes.getSelectedRow();
-            listaClientes.get(index).setDataNasc(this.jFormattedTextDataNasc.getText());
-            listaClientes.get(index).setEndereco(this.jTextFieldEndereco.getText());
-            listaClientes.get(index).setNome(this.jTextFieldNome.getText());
-            listaClientes.get(index).setSobrenome(this.jTextFieldSobrenome.getText());
-            listaClientes.get(index).setTelefone(this.jFormattedTextTelefone.getText());
-            if(this.jRadioButtonFemenino.isSelected()){
-                listaClientes.get(index).setSexo("Femenino");
-            }else{
-                listaClientes.get(index).setSexo("Masculino");
-            }
-            modo = "Navegacao";
-            manipulaInterface(modo);
-            carregaTabela();
+
         }
+
 
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -364,16 +327,18 @@ public class ManterCliente extends javax.swing.JFrame {
     private void jTableTabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaClientesMouseClicked
 
         int index = this.jTableTabelaClientes.getSelectedRow();
-        if (index > -1 && index < this.listaClientes.size()) {
+
+        if (index > -1 && index < this.modelo.getRowCount()) {
             modo = "Selecao";
             manipulaInterface(modo);
-            ClientesBEAN c = listaClientes.get(index);
-            this.jFormattedTextDataNasc.setText(c.getDataNasc());
-            this.jTextFieldEndereco.setText(c.getEndereco());
-            this.jTextFieldNome.setText(c.getNome());
-            this.jTextFieldSobrenome.setText(c.getSobrenome());
-            this.jFormattedTextTelefone.setText(c.getTelefone());
-            this.jFormattedTextFieldCpf.setText(c.getCPF());
+
+            this.jTextFieldNome.setText((String) modelo.getValueAt(index, 1));
+            this.jTextFieldSobrenome.setText((String) modelo.getValueAt(index, 2));
+            this.jFormattedTextFieldCpf.setText((String) modelo.getValueAt(index, 3));
+            this.jFormattedTextDataNasc.setText((String) modelo.getValueAt(index, 4));
+            this.jFormattedTextTelefone.setText((String) modelo.getValueAt(index, 5));
+            this.jTextFieldEndereco.setText((String) modelo.getValueAt(index, 6));
+
         }
 
     }//GEN-LAST:event_jTableTabelaClientesMouseClicked
@@ -452,40 +417,6 @@ public class ManterCliente extends javax.swing.JFrame {
             default:
                 break;
         }
-    }
-
-    public void ordenaLista(){
-        Collections.sort(listaClientes, new Comparator(){
-            @Override
-            public int compare (Object o1, Object o2){
-                ClientesBEAN c1 = (ClientesBEAN) o1;
-                ClientesBEAN c2 = (ClientesBEAN) o2;
-                return c1.getId() < c2.getId() ? - 1 : (c1.getId() > c2.getId() ? + 1 : 0);
-            }
-        });
-    }
-    
-    public void carregaTabela() {
-
-        //Modo menos eficiente
-        
-        Object Colunas[] = {"Id", "Nome", "Sobrenome", "CPF", "Data Nasç.", "Telefone", "Endereço", "Sexo"};
-        DefaultTableModel modelo = new DefaultTableModel(Colunas, 0);
-
-        for (ClientesBEAN listaCliente : this.listaClientes) {
-            Object linha[] = {listaCliente.getId(),
-                listaCliente.getNome(),
-                listaCliente.getSobrenome(),
-                listaCliente.getCPF(),
-                listaCliente.getDataNasc(),
-                listaCliente.getTelefone(),
-                listaCliente.getEndereco(),
-                listaCliente.getSexo()};
-
-            modelo.addRow(linha);
-        }
-        this.jTableTabelaClientes.setModel(modelo);
-        ordenaLista();
     }
 
     private void habilitaCampoDados(boolean flag) {

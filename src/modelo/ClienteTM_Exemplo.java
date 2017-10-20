@@ -4,16 +4,16 @@ package modelo;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-public class ClienteTM extends AbstractTableModel{
+public class ClienteTM_Exemplo extends AbstractTableModel{
     
     private ArrayList<ClientesBEAN> linhas;
     private String[] colunas = new String[]{"Id", "Nome", "Sobrenome", "CPF", "Data Nasç.", "Telefone", "Endereço", "Sexo"};
 
-    public ClienteTM() {
+    public ClienteTM_Exemplo() {
         linhas = new ArrayList<>();
     }
 
-    public ClienteTM(ArrayList<ClientesBEAN> linhas) {
+    public ClienteTM_Exemplo(ArrayList<ClientesBEAN> linhas) {
         this.linhas = linhas;
     }
 
@@ -29,7 +29,7 @@ public class ClienteTM extends AbstractTableModel{
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
-        ClientesBEAN c = this.getCliente(rowIndex);
+        ClientesBEAN c = linhas.get(rowIndex);
         
         switch(columnIndex){
             case 0:
