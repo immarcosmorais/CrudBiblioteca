@@ -5,15 +5,26 @@
  */
 package modelo;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
 public class TableModelCliente extends AbstractTableModel {
 
     private ArrayList<ClientesBEAN> linhas;
-    private final String[] colunas = new String[]{"Id", "Nome", "Sobrenome", "CPF", "Data Nasç.", "Telefone", "Endereço", "Sexo"};
-
+    private final String[] colunas = new String[]{"Id", "Nome", "Sobrenome", "CPF", "Data Nasç.", "Telefone", "Endereço", "Sexo", "Ativo"};
+    
+    Class[] types = new Class[]{
+        java.lang.Integer.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.String.class,
+        java.lang.Boolean.class
+    };
+    
     public TableModelCliente() {
         this.linhas = new ArrayList<>();
     }
@@ -46,6 +57,7 @@ public class TableModelCliente extends AbstractTableModel {
         linhas.get(rowIndex).setSexo(aValue.getSexo());
         linhas.get(rowIndex).setSobrenome(aValue.getSobrenome());
         linhas.get(rowIndex).setTelefone(aValue.getTelefone());
+        linhas.get(rowIndex).setAtivo(aValue.isAtivo());
 
         fireTableCellUpdated(rowIndex, 0);
         fireTableCellUpdated(rowIndex, 1);
@@ -55,6 +67,7 @@ public class TableModelCliente extends AbstractTableModel {
         fireTableCellUpdated(rowIndex, 5);
         fireTableCellUpdated(rowIndex, 6);
         fireTableCellUpdated(rowIndex, 7);
+        fireTableCellUpdated(rowIndex, 8);
     }
 
     @Override
@@ -71,33 +84,28 @@ public class TableModelCliente extends AbstractTableModel {
     public Object getValueAt(int linha, int coluna) {
 
         switch (coluna) {
-            case 0:
-                return this.linhas.get(linha).getId();
-            case 1:
-                return this.linhas.get(linha).getNome();
-            case 2:
-                return this.linhas.get(linha).getSobrenome();
-            case 3:
-                return this.linhas.get(linha).getCPF();
-            case 4:
-                return this.linhas.get(linha).getDataNasc();
-            case 5:
-                return this.linhas.get(linha).getTelefone();
-            case 6:
-                return this.linhas.get(linha).getEndereco();
-            case 7:
-                return this.linhas.get(linha).getSexo();
-            default:
-                return -1;
+            case 0: return this.linhas.get(linha).getId();
+            case 1: return this.linhas.get(linha).getNome();
+            case 2: return this.linhas.get(linha).getSobrenome();
+            case 3: return this.linhas.get(linha).getCPF();
+            case 4: return this.linhas.get(linha).getDataNasc();
+            case 5: return this.linhas.get(linha).getTelefone();
+            case 6: return this.linhas.get(linha).getEndereco();
+            case 7: return this.linhas.get(linha).getSexo();
+            case 8: return this.linhas.get(linha).isAtivo();
+            default: return -1;
         }
 
     }
 
     @Override
     public String getColumnName(int coluna) {
-
         return colunas[coluna];
-
     }
 
+    @Override
+    public boolean isCellEditable(int i, int i1) {
+        return super.isCellEditable(i, i1); //To change body of generated methods, choose Tools | Templates.
+    }
+    
 }

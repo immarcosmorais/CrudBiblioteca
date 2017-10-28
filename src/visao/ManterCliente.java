@@ -18,6 +18,7 @@ public class ManterCliente extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         tabelaClienteModelo = new TableModelCliente();
         this.jTableTabelaClientes.setModel(tabelaClienteModelo);
+        //this.jTableTabelaClientes.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(new JCheckBox()));
         manipulaInterface(modo);
     }
 
@@ -52,19 +53,20 @@ public class ManterCliente extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manter Clientes ");
 
+        jTableTabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jTableTabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Id", "Nome", "Sobrenome", "CPF", "Data de Nasç.", "Telefone", "Endereço", "Sexo"
+                "Id", "Nome", "Sobrenome", "CPF", "Data de Nasç.", "Telefone", "Endereço", "Sexo", "Ativo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -81,6 +83,9 @@ public class ManterCliente extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTableTabelaClientes);
+        if (jTableTabelaClientes.getColumnModel().getColumnCount() > 0) {
+            jTableTabelaClientes.getColumnModel().getColumn(0).setPreferredWidth(30);
+        }
 
         jButtonNovo.setText("Novo");
         jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -107,11 +112,17 @@ public class ManterCliente extends javax.swing.JFrame {
 
         jLabelNome.setText("Nome:");
 
+        jTextFieldNome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+
         jLabelSobrenome.setText("Sobrenome:");
+
+        jTextFieldSobrenome.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabelTelefone.setText("Telefone:");
 
         jLabelEndereco.setText("Endereço:");
+
+        jTextFieldEndereco.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         jLabelSexo.setText("Sexo:");
 
@@ -152,18 +163,21 @@ public class ManterCliente extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jFormattedTextFieldCpf.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         try {
             jFormattedTextTelefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jFormattedTextTelefone.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         try {
             jFormattedTextDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jFormattedTextDataNasc.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         javax.swing.GroupLayout jPanelPlanoDeFundoDadosLayout = new javax.swing.GroupLayout(jPanelPlanoDeFundoDados);
         jPanelPlanoDeFundoDados.setLayout(jPanelPlanoDeFundoDadosLayout);
@@ -180,22 +194,22 @@ public class ManterCliente extends javax.swing.JFrame {
                     .addComponent(jLabelDataDeNasc)
                     .addComponent(jLabelCpf))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelPlanoDeFundoDadosLayout.createSequentialGroup()
-                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonCancelar))
+                .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanelPlanoDeFundoDadosLayout.createSequentialGroup()
                         .addComponent(jRadioButtonMasculino)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonFemenino))
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldSobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextFieldEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                     .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jFormattedTextDataNasc, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jFormattedTextTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                        .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.Alignment.LEADING)))
+                        .addComponent(jFormattedTextTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addGroup(jPanelPlanoDeFundoDadosLayout.createSequentialGroup()
+                        .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonCancelar))
+                    .addComponent(jTextFieldEndereco)
+                    .addComponent(jTextFieldSobrenome)
+                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelPlanoDeFundoDadosLayout.setVerticalGroup(
@@ -243,7 +257,7 @@ public class ManterCliente extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanelPlanoDeFundoDados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 751, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -316,7 +330,7 @@ public class ManterCliente extends javax.swing.JFrame {
                 this.jTextFieldEndereco.getText(),
                 s,
                 true);
-                                                                     
+
         CPF cpf = new CPF(this.jFormattedTextFieldCpf.getText());
         Data dataNasc = new Data(this.jFormattedTextDataNasc.getText() + " " + "00:00", Data.BarraComHora);
         Data hoje = new Data();
