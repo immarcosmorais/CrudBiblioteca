@@ -1,11 +1,11 @@
 package modelo;
 
 public class ClientesBEAN {
-    
+
     private int id;
     private String nome;
     private String sobrenome;
-    private String CPF;        
+    private String CPF;
     private String dataNasc;
     private String telefone;
     private String endereco;
@@ -152,5 +152,5 @@ public class ClientesBEAN {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
-    
+
 }
