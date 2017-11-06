@@ -3,9 +3,9 @@ package controle;
 import java.util.ArrayList;
 import modelo.ClientesBEAN;
 
-public class ClienteControle {
+public class ControleCliente {
 
-    public ClienteControle() {
+    public ControleCliente() {
     }
     
     public void addCliente(ClientesBEAN cliente){
@@ -14,7 +14,7 @@ public class ClienteControle {
     
     public void updateContato(ClientesBEAN cliente){
         ClienteDAO.getInstance().update(cliente);
-    }
+    } 
 
     public void deleteCliente(ClientesBEAN cliente) {
         ClienteDAO.getInstance().delete(cliente);

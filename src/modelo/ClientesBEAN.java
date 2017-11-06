@@ -27,6 +27,18 @@ public class ClientesBEAN {
         this.ativo = ativo;
     }
 
+    @Override
+    public String toString() {
+        return String.format("id: %d \n"
+                + "Nome: %s \n"
+                + "Sobrenome: %s \n"
+                + "CPF: %s \n"
+                + "Data de Nasc.: %s \n"
+                + "Telefone: %s \n"
+                + "Enredeço: %s \n"
+                + "Sexo: %s \n", id, nome, sobrenome, CPF, dataNasc, telefone, endereco, sexo);
+    }
+    
     /**
      * @return the id
      */

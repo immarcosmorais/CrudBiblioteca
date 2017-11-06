@@ -44,6 +44,7 @@ public class MySQLDAO {
             }
             rs = psmt.executeQuery();
         } catch (SQLException e) {
+            System.err.println("Erro: " + e.getMessage());
         }
         return rs;
     }

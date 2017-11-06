@@ -1,5 +1,7 @@
 package visao;
 
+import controle.ControleCliente;
+import java.util.ArrayList;
 import modelo.CPF;
 import javax.swing.JOptionPane;
 import modelo.TableModelCliente;
@@ -9,16 +11,18 @@ import modelo.Mensagens;
 
 public class ManterCliente extends javax.swing.JFrame {
 
-    String modo;
-    TableModelCliente tabelaClienteModelo;
-
+    private String modo;
+    private TableModelCliente tabelaClienteModelo;
+    private ControleCliente controle;
+    
     public ManterCliente() {
+        
         initComponents();
+        controle = new ControleCliente();
         modo = "Navegacao";
         setLocationRelativeTo(null);
-        tabelaClienteModelo = new TableModelCliente();
+        tabelaClienteModelo = new TableModelCliente(controle.listaCliente());
         this.jTableTabelaClientes.setModel(tabelaClienteModelo);
-        //this.jTableTabelaClientes.getColumnModel().getColumn(8).setCellEditor(new DefaultCellEditor(new JCheckBox()));
         manipulaInterface(modo);
     }
 
@@ -173,7 +177,7 @@ public class ManterCliente extends javax.swing.JFrame {
         jFormattedTextTelefone.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
 
         try {
-            jFormattedTextDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            jFormattedTextDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -200,9 +204,8 @@ public class ManterCliente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jRadioButtonFemenino))
                     .addComponent(jFormattedTextFieldCpf, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
-                    .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jFormattedTextDataNasc, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jFormattedTextTelefone, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addComponent(jFormattedTextDataNasc)
+                    .addComponent(jFormattedTextTelefone, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addGroup(jPanelPlanoDeFundoDadosLayout.createSequentialGroup()
                         .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)

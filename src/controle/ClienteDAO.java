@@ -50,11 +50,11 @@ public class ClienteDAO {
     }
 
     public ArrayList<ClientesBEAN> findAllClientes() {
-        return listaClientes("SELECT * FROM CLIENTES ORDER BY nome");
+        return listaClientes("select * from clientes order by id");
     }
-
-    public ArrayList<ClientesBEAN> listaClientes(String query) {
-        ArrayList<ClientesBEAN> lista = new ArrayList<ClientesBEAN>();
+    
+    private ArrayList<ClientesBEAN> listaClientes(String query) {
+        ArrayList<ClientesBEAN> lista = new ArrayList<>();
         ResultSet rs = null;
         rs = MySQLDAO.getResultSet(query);
         try {
@@ -71,6 +71,7 @@ public class ClienteDAO {
             }
             rs.close();
         } catch (SQLException e) {
+            System.err.println("erro: " + e.getMessage());
         }
         return lista;
     }
