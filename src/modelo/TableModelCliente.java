@@ -107,5 +107,10 @@ public class TableModelCliente extends AbstractTableModel {
     public boolean isCellEditable(int i, int i1) {
         return super.isCellEditable(i, i1); //To change body of generated methods, choose Tools | Templates.
     }
+
+    public void setLinhas(ArrayList<ClientesBEAN> linhas) {
+        this.linhas = linhas;
+        fireTableDataChanged();
+    }
     
 }

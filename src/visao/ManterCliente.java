@@ -14,10 +14,11 @@ public class ManterCliente extends javax.swing.JFrame {
     private String modo;
     private TableModelCliente tabelaClienteModelo;
     private ControleCliente controle;
+    private int index;
     
     public ManterCliente() {
-        
         initComponents();
+        index = 1;
         controle = new ControleCliente();
         modo = "Navegacao";
         setLocationRelativeTo(null);
@@ -300,7 +301,7 @@ public class ManterCliente extends javax.swing.JFrame {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         modo = "Navegacao";
         manipulaInterface(modo);
-        int index = this.jTableTabelaClientes.getSelectedRow();
+        index = this.jTableTabelaClientes.getSelectedRow();
         int i = JOptionPane.showConfirmDialog(rootPane, Mensagens._002() + tabelaClienteModelo.getValueAt(index, 1) + " " + tabelaClienteModelo.getValueAt(index, 2) + "?");
         if (i != JOptionPane.YES_OPTION) {
             if (i == JOptionPane.NO_OPTION) {
@@ -308,14 +309,16 @@ public class ManterCliente extends javax.swing.JFrame {
             }
         } else {
             if (index > -1) {
-                tabelaClienteModelo.removeCliente(index);
+                controle.deleteCliente((int) jTableTabelaClientes.getValueAt(index, 0));
+                tabelaClienteModelo.setLinhas(controle.listaCliente());
+                limpaCampos();
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
-        int index = this.jTableTabelaClientes.getSelectedRow();
+        index = this.jTableTabelaClientes.getSelectedRow();
 
         String s = null;
         if (this.jRadioButtonFemenino.isSelected()) {
@@ -323,8 +326,12 @@ public class ManterCliente extends javax.swing.JFrame {
         } else {
             s = "Masculino";
         }
-
-        ClientesBEAN c = new ClientesBEAN(0,
+        
+        CPF cpf = new CPF(this.jFormattedTextFieldCpf.getText());
+        Data dataNasc = new Data(this.jFormattedTextDataNasc.getText() + " " + "00:00", Data.HifenSemHora);
+        Data hoje = new Data();
+        
+        ClientesBEAN c = new ClientesBEAN((int) jTableTabelaClientes.getValueAt(index,0),
                 this.jTextFieldNome.getText(),
                 this.jTextFieldSobrenome.getText(),
                 this.jFormattedTextFieldCpf.getText(),
@@ -334,15 +341,12 @@ public class ManterCliente extends javax.swing.JFrame {
                 s,
                 true);
 
-        CPF cpf = new CPF(this.jFormattedTextFieldCpf.getText());
-        Data dataNasc = new Data(this.jFormattedTextDataNasc.getText() + " " + "00:00", Data.BarraComHora);
-        Data hoje = new Data();
-
         if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
             if (modo.equals("Novo")) {
-                if (cpf.isCPF()) {
+                if (cpf.isCPF()) {  
                     if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
-                        tabelaClienteModelo.adicionaCliente(c);
+                        controle.addCliente(c);
+                        tabelaClienteModelo.setLinhas(controle.listaCliente());
                         limpaCampos();
                     } else {
                         JOptionPane.showMessageDialog(rootPane, Mensagens._004());
@@ -353,7 +357,10 @@ public class ManterCliente extends javax.swing.JFrame {
             } else if (modo.equals("Editar")) {
                 if (cpf.isCPF()) {
                     if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
-                        tabelaClienteModelo.setValueAt(c, index);
+                        controle.updateCliente(c);
+                        tabelaClienteModelo.setLinhas(controle.listaCliente());
+                        modo = "Navegacao";
+                        manipulaInterface(modo);
                         limpaCampos();
                     } else {
                         JOptionPane.showMessageDialog(rootPane, Mensagens._004());
@@ -386,7 +393,7 @@ public class ManterCliente extends javax.swing.JFrame {
 
     private void jTableTabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaClientesMouseClicked
 
-        int index = this.jTableTabelaClientes.getSelectedRow();
+        index = this.jTableTabelaClientes.getSelectedRow();
 
         if (index > -1 && index < this.tabelaClienteModelo.getRowCount()) {
             modo = "Selecao";

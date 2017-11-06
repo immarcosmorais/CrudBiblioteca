@@ -39,14 +39,26 @@ public class ClienteDAO {
                 + "cpf = ?, "
                 + "data_nasc = ?, "
                 + "telefone = ?, "
-                + "endereco = ? "
+                + "endereco = ?, "
                 + "sexo = ? "
-                + "where = id = ?";
-        MySQLDAO.executeQuery(query, cliente.getNome(), cliente.getSobrenome(), cliente.getCPF(), cliente.getDataNasc(), cliente.getTelefone(), cliente.getEndereco(), cliente.getSexo());
+                + "where id = ?";
+        MySQLDAO.executeQuery(query, 
+                cliente.getNome(), 
+                cliente.getSobrenome(), 
+                cliente.getCPF(), 
+                cliente.getDataNasc(), 
+                cliente.getTelefone(), 
+                cliente.getEndereco(), 
+                cliente.getSexo(),
+                cliente.getId());
     }
 
     public void delete(ClientesBEAN cliente) {
         MySQLDAO.executeQuery("DELETE FROM CLIENTES WHERE id = ?", cliente.getId());
+    }
+    
+    public void delete(int id) {
+        MySQLDAO.executeQuery("DELETE FROM CLIENTES WHERE id = ?", id);
     }
 
     public ArrayList<ClientesBEAN> findAllClientes() {
@@ -126,5 +138,4 @@ public class ClienteDAO {
         }
         return result;
     }
-
 }

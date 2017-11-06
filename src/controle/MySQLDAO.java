@@ -67,6 +67,7 @@ public class MySQLDAO {
             psmt.close();
 
         } catch (SQLException e) {
+            System.err.println("Erro: " + e.getMessage());
         }
         return update;
     }

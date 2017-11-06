@@ -12,14 +12,18 @@ public class ControleCliente {
         ClienteDAO.getInstance().create(cliente);
     }
     
-    public void updateContato(ClientesBEAN cliente){
+    public void updateCliente(ClientesBEAN cliente){
         ClienteDAO.getInstance().update(cliente);
     } 
 
     public void deleteCliente(ClientesBEAN cliente) {
         ClienteDAO.getInstance().delete(cliente);
     }
-
+    
+    public void deleteCliente(int id) {
+        ClienteDAO.getInstance().delete(id);
+    }
+    
     public ClientesBEAN findPessoa(int id){
         return ClienteDAO.getInstance().findCliente(id);
     }
