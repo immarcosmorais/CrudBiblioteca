@@ -101,7 +101,8 @@ public class ClienteDAO {
         rs = MySQLDAO.getResultSet(query);
         try {
             while (rs.next()) {
-                lista.add(new ClientesBEAN(rs.getInt("id"),
+                lista.add(new ClientesBEAN(
+                        rs.getInt("id"),
                         rs.getString("nome"),
                         rs.getString("sobrenome"),
                         rs.getString("cpf"),
