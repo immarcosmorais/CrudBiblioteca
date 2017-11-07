@@ -21,15 +21,35 @@ public class ClienteDAO {
     }
 
     public long create(ClientesBEAN cliente) {
-        String query = "INSERT INTO CLIENTES "
-                + "(nome, "
-                + "sobrenome, "
-                + "cpf, "
-                + "data_nasc, "
-                + "telefone, "
-                + "endereco, "
-                + "sexo) VALUES(?,?,?,?,?,?,?)";
-        return MySQLDAO.executeQuery(query, cliente.getNome(), cliente.getSobrenome(), cliente.getCPF(), cliente.getDataNasc(), cliente.getTelefone(), cliente.getEndereco(), cliente.getSexo());
+        
+        
+        
+        String query = "INSERT INTO `clientes` ("
+                + "`nome`, "
+                + "`sobrenome`, "
+                + "`cpf`, "
+                + "`data_nasc`, "
+                + "`telefone`, "
+                + "`rua`, "
+                + "`bairro`, "
+                + "`cidade`, "
+                + "`estado`, "
+                + "`numero`, "
+                + "`sexo`) "
+                + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+        
+        return MySQLDAO.executeQuery(query,
+                cliente.getNome(),
+                cliente.getSobrenome(),
+                cliente.getCPF(),
+                cliente.getDataNasc(),
+                cliente.getTelefone(),
+                cliente.getRua(),
+                cliente.getBairro(),
+                cliente.getCidade(),
+                cliente.getEstado(),
+                cliente.getNumero(),
+                cliente.getSexo());
     }
 
     public void update(ClientesBEAN cliente) {
@@ -39,18 +59,26 @@ public class ClienteDAO {
                 + "cpf = ?, "
                 + "data_nasc = ?, "
                 + "telefone = ?, "
-                + "endereco = ?, "
+                + "rua = ?,"
+                + "bairro = ?"
+                + "cidade = ?"
+                + "estado = ?"
+                + "numero = ?"
                 + "sexo = ? "
                 + "where id = ?";
-        MySQLDAO.executeQuery(query, 
-                cliente.getNome(), 
-                cliente.getSobrenome(), 
-                cliente.getCPF(), 
-                cliente.getDataNasc(), 
-                cliente.getTelefone(), 
-                cliente.getEndereco(), 
-                cliente.getSexo(),
-                cliente.getId());
+        MySQLDAO.executeQuery(query,
+                cliente.getNome(),
+                cliente.getSobrenome(),
+                cliente.getCPF(),
+                cliente.getDataNasc(),
+                cliente.getTelefone(),
+                cliente.getRua(),
+                cliente.getBairro(),
+                cliente.getCidade(),
+                cliente.getEstado(),
+                cliente.getEstado(),
+                cliente.getNumero(),
+                cliente.getSexo());
     }
 
     public void delete(ClientesBEAN cliente) {
@@ -81,7 +109,11 @@ public class ClienteDAO {
                         rs.getString("cpf"),
                         rs.getString("data_nasc"),
                         rs.getString("telefone"),
-                        rs.getString("endereco"),
+                        rs.getString("rua"),
+                        rs.getString("bairro"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("numero"),
                         rs.getString("sexo"),
                         rs.getObject("ativo", Boolean.class)));
             }
@@ -104,7 +136,11 @@ public class ClienteDAO {
                         rs.getString("cpf"),
                         rs.getString("data_nasc"),
                         rs.getString("telefone"),
-                        rs.getString("endereco"),
+                        rs.getString("rua"),
+                        rs.getString("bairro"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("numero"),
                         rs.getString("sexo"),
                         rs.getObject("ativo", Boolean.class));
             }
@@ -140,7 +176,11 @@ public class ClienteDAO {
                         rs.getString("cpf"),
                         rs.getString("data_nasc"),
                         rs.getString("telefone"),
-                        rs.getString("endereco"),
+                        rs.getString("rua"),
+                        rs.getString("bairro"),
+                        rs.getString("cidade"),
+                        rs.getString("estado"),
+                        rs.getString("numero"),
                         rs.getString("sexo"),
                         rs.getObject("ativo", Boolean.class)));
             }
