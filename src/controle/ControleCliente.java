@@ -36,6 +36,10 @@ public class ControleCliente {
         return ClienteDAO.getInstance().buscar(cliente);
     }
     
+    public ArrayList<ClientesBEAN> buscarCliente(String nome){
+        return ClienteDAO.getInstance().buscar(nome);
+    }
+    
     public Boolean isExist(int id){
         return ClienteDAO.getInstance().isExist(id);
     }

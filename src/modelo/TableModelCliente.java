@@ -61,7 +61,7 @@ public class TableModelCliente extends AbstractTableModel {
     }
 
     public void setValueAt(ClientesBEAN aValue, int rowIndex) {
-
+        
         linhas.get(rowIndex).setCPF(aValue.getCPF());
         linhas.get(rowIndex).setDataNasc(aValue.getDataNasc());
         linhas.get(rowIndex).setEndereco(aValue.getEndereco());

@@ -127,6 +127,29 @@ public class ClienteDAO {
         }
         return result;
     }
+    
+    public ArrayList<ClientesBEAN> buscar(String nome){
+        ArrayList<ClientesBEAN> lista = new ArrayList<>();
+        ResultSet rs = null;
+        rs = MySQLDAO.getResultSet("select * from clientes where nome like '%" + nome + "%'");
+        try {
+            while (rs.next()) {
+                lista.add(new ClientesBEAN(rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("sobrenome"),
+                        rs.getString("cpf"),
+                        rs.getString("data_nasc"),
+                        rs.getString("telefone"),
+                        rs.getString("endereco"),
+                        rs.getString("sexo"),
+                        rs.getObject("ativo", Boolean.class)));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            System.err.println("erro: " + e.getMessage());
+        }
+        return  lista;
+    }
 
     public Boolean isExist(int id) {
         Boolean result = false;
