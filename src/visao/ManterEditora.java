@@ -1,37 +1,36 @@
 package visao;
 
-import controle.ControleCliente;
-import modelo.CPF;
+import controle.ControleEditora;
 import javax.swing.JOptionPane;
-import modelo.TableModelClientes;
-import modelo.ClientesBEAN;
-import modelo.Data;
+import modelo.CNPJ;
+import modelo.EditorasBEAN;
 import modelo.Mensagens;
+import modelo.TableModelEditoras;
 
 public class ManterEditora extends javax.swing.JFrame {
-    
+
     private String modo;
-    private TableModelClientes tabelaClienteModelo;
-    private ControleCliente controle;
+    private TableModelEditoras tabelaEditoraModelo;
+    private ControleEditora controle;
     private int index;
-    
+
     public ManterEditora() {
         initComponents();
         index = 1;
-        controle = new ControleCliente();
+        controle = new ControleEditora();
         modo = "Navegacao";
         setLocationRelativeTo(null);
-        tabelaClienteModelo = new TableModelClientes(controle.buscarTodosClientes());
-        this.jTableTabelaClientes.setModel(tabelaClienteModelo);
+        tabelaEditoraModelo = new TableModelEditoras(controle.buscarTodasEditoras());
+        this.jTableTabelaEditoras.setModel(tabelaEditoraModelo);
         manipulaInterface(modo);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTabelaClientes = new javax.swing.JTable();
+        jTableTabelaEditoras = new javax.swing.JTable();
         jButtonNovo = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonEditar = new javax.swing.JButton();
@@ -62,8 +61,8 @@ public class ManterEditora extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Manter Clientes ");
 
-        jTableTabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTableTabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
+        jTableTabelaEditoras.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        jTableTabelaEditoras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -71,15 +70,15 @@ public class ManterEditora extends javax.swing.JFrame {
 
             }
         ));
-        jTableTabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableTabelaEditoras.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableTabelaClientesMouseClicked(evt);
+                jTableTabelaEditorasMouseClicked(evt);
             }
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTableTabelaClientesMousePressed(evt);
+                jTableTabelaEditorasMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableTabelaClientes);
+        jScrollPane1.setViewportView(jTableTabelaEditoras);
 
         jButtonNovo.setText("Novo");
         jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +130,7 @@ public class ManterEditora extends javax.swing.JFrame {
         jLabelCnpj.setText("CNPJ:");
 
         try {
-            jFormattedTextFieldCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            jFormattedTextFieldCnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/0001-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -332,61 +331,59 @@ public class ManterEditora extends javax.swing.JFrame {
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
         modo = "Navegacao";
         manipulaInterface(modo);
-        index = this.jTableTabelaClientes.getSelectedRow();
-        int i = JOptionPane.showConfirmDialog(rootPane, Mensagens._002() + tabelaClienteModelo.getValueAt(index, 1) + " " + tabelaClienteModelo.getValueAt(index, 2) + "?");
+        index = this.jTableTabelaEditoras.getSelectedRow();
+        int i = JOptionPane.showConfirmDialog(rootPane, Mensagens._002() + tabelaEditoraModelo.getValueAt(index, 1) + " " + tabelaEditoraModelo.getValueAt(index, 2) + "?");
         if (i != JOptionPane.YES_OPTION) {
             if (i == JOptionPane.NO_OPTION) {
-                
+
             }
         } else {
             if (index > -1) {
-                controle.deletaCliente((int) jTableTabelaClientes.getValueAt(index, 0));
-                tabelaClienteModelo.setLinhas(controle.buscarTodosClientes());
+                controle.delataEditora((int) jTableTabelaEditoras.getValueAt(index, 0));
+                tabelaEditoraModelo.setLinhas(controle.buscarTodasEditoras());
                 limpaCampos();
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
-    private void jTableTabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaClientesMouseClicked
-        
-        index = this.jTableTabelaClientes.getSelectedRow();
+    private void jTableTabelaEditorasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaEditorasMouseClicked
 
-        if (index > -1 && index < this.tabelaClienteModelo.getRowCount()) {
+        index = this.jTableTabelaEditoras.getSelectedRow();
+
+        if (index > -1 && index < this.tabelaEditoraModelo.getRowCount()) {
             modo = "Selecao";
             manipulaInterface(modo);
 
-            this.jTextFieldRazaoSocial.setText((String) tabelaClienteModelo.getValueAt(index, 1));
-            this.jTextFieldSobrenome.setText((String) tabelaClienteModelo.getValueAt(index, 2));
-            this.jFormattedTextFieldCnpj.setText((String) tabelaClienteModelo.getValueAt(index, 3));
-            this.jFormattedTextDataNasc.setText((String) tabelaClienteModelo.getValueAt(index, 4));
-            this.jFormattedTextTelefone.setText((String) tabelaClienteModelo.getValueAt(index, 5));
-            this.jTextFieldRua.setText((String) tabelaClienteModelo.getValueAt(index, 6));
-            this.jTextFieldBairro.setText((String) tabelaClienteModelo.getValueAt(index, 7));
-            this.jTextFieldCidade.setText((String) tabelaClienteModelo.getValueAt(index, 8));
-            this.jTextFieldEstado.setText((String) tabelaClienteModelo.getValueAt(index, 9));
-            this.jTextFieldNumero.setText((String) tabelaClienteModelo.getValueAt(index, 10));
+            this.jTextFieldRazaoSocial.setText((String) tabelaEditoraModelo.getValueAt(index, 1));
+            this.jFormattedTextFieldCnpj.setText((String) tabelaEditoraModelo.getValueAt(index, 3));
+            this.jFormattedTextTelefone.setText((String) tabelaEditoraModelo.getValueAt(index, 5));
+            this.jTextFieldRua.setText((String) tabelaEditoraModelo.getValueAt(index, 6));
+            this.jTextFieldBairro.setText((String) tabelaEditoraModelo.getValueAt(index, 7));
+            this.jTextFieldCidade.setText((String) tabelaEditoraModelo.getValueAt(index, 8));
+            this.jTextFieldEstado.setText((String) tabelaEditoraModelo.getValueAt(index, 9));
+            this.jTextFieldNumero.setText((String) tabelaEditoraModelo.getValueAt(index, 10));
 
         }
-         
-    }//GEN-LAST:event_jTableTabelaClientesMouseClicked
 
-    private void jTableTabelaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaClientesMousePressed
-        
-        index = this.jTableTabelaClientes.getSelectedRow();
-        if (jTableTabelaClientes.getSelectedColumn() == 12) {
-            tabelaClienteModelo.inverteValor(jTableTabelaClientes.getSelectedRow());
-            controle.ativaCliente((boolean) jTableTabelaClientes.getValueAt(index, 12), (int) jTableTabelaClientes.getValueAt(index, 0));
+    }//GEN-LAST:event_jTableTabelaEditorasMouseClicked
+
+    private void jTableTabelaEditorasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaEditorasMousePressed
+
+        index = this.jTableTabelaEditoras.getSelectedRow();
+        if (jTableTabelaEditoras.getSelectedColumn() == 12) {
+            tabelaEditoraModelo.inverteValor(jTableTabelaEditoras.getSelectedRow());
+            controle.ativaEditora((boolean) jTableTabelaEditoras.getValueAt(index, 12), (int) jTableTabelaEditoras.getValueAt(index, 0));
         }
-               
-    }//GEN-LAST:event_jTableTabelaClientesMousePressed
+
+    }//GEN-LAST:event_jTableTabelaEditorasMousePressed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        tabelaClienteModelo.setLinhas(controle.buscarCliente(jTextFieldPesquisar.getText()));
+        tabelaEditoraModelo.setLinhas(controle.buscarEditora(jTextFieldPesquisar.getText()));
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButtonLimaparPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimaparPesquisaActionPerformed
         jTextFieldPesquisar.setText(null);
-        tabelaClienteModelo.setLinhas(controle.buscarTodosClientes());
+        tabelaEditoraModelo.setLinhas(controle.buscarTodasEditoras());
     }//GEN-LAST:event_jButtonLimaparPesquisaActionPerformed
 
     private void jButtonLimparCamposActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparCamposActionPerformed
@@ -400,77 +397,50 @@ public class ManterEditora extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
-        index = this.jTableTabelaClientes.getSelectedRow();
+        index = this.jTableTabelaEditoras.getSelectedRow();
 
-        String s = null;
-        if (this.jRadioButtonFemenino.isSelected()) {
-            s = "Femenino";
-        } else {
-            s = "Masculino";
-        }
+        CNPJ cnpj = new CNPJ(this.jFormattedTextFieldCnpj.getText());
 
-        CPF cpf = new CPF(this.jFormattedTextFieldCnpj.getText());
-        Data dataNasc = new Data(this.jFormattedTextDataNasc.getText() + " " + "00:00", Data.HifenSemHora);
-        Data hoje = new Data();
+        EditorasBEAN e = new EditorasBEAN((int) jTableTabelaEditoras.getValueAt(index, 0),
+                jTextFieldRazaoSocial.getText(),
+                jFormattedTextFieldCnpj.getText(),
+                jFormattedTextTelefone.getText(),
+                jTextFieldRua.getText(),
+                jTextFieldBairro.getText(),
+                jTextFieldCidade.getText(),
+                jTextFieldEstado.getText(),
+                jTextFieldNumero.getText(),
+                true);
 
-        ClientesBEAN c = new ClientesBEAN((int) jTableTabelaClientes.getValueAt(index, 0),
-            jTextFieldRazaoSocial.getText(),
-            jTextFieldSobrenome.getText(),
-            jFormattedTextFieldCnpj.getText(),
-            jFormattedTextDataNasc.getText(),
-            jFormattedTextTelefone.getText(),
-            jTextFieldRua.getText(),
-            jTextFieldBairro.getText(),
-            jTextFieldCidade.getText(),
-            jTextFieldEstado.getText(),
-            jTextFieldNumero.getText(),
-            s,
-            true);
-
-        if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
+        if (this.verificaCamposPreenchidos()) {
             if (modo.equals("Novo")) {
-                if (cpf.isCPF()) {
-                    if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
-                        controle.adicionaCliente(c);
-                        tabelaClienteModelo.setLinhas(controle.buscarTodosClientes());
-                        limpaCampos();
-                    } else {
-                        JOptionPane.showMessageDialog(rootPane, Mensagens._004());
-                    }
+                if (cnpj.isCNPJ()) {
+                    controle.adicionaEditora(e);
+                    tabelaEditoraModelo.setLinhas(controle.buscarTodasEditoras());
+                    limpaCampos();
                 } else {
-                    JOptionPane.showMessageDialog(rootPane, Mensagens._003());
+                    JOptionPane.showMessageDialog(rootPane, Mensagens._005());
                 }
             } else if (modo.equals("Editar")) {
-                if (cpf.isCPF()) {
-                    if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
-                        controle.atualizaCliente(c);
-                        tabelaClienteModelo.setLinhas(controle.buscarTodosClientes());
-                        modo = "Navegacao";
-                        manipulaInterface(modo);
-                        limpaCampos();
-                    } else {
-                        JOptionPane.showMessageDialog(rootPane, Mensagens._004());
-                    }
+                if (cnpj.isCNPJ()) {
+                    controle.adicionaEditora(e);
+                    tabelaEditoraModelo.setLinhas(controle.buscarTodasEditoras());
+                    limpaCampos();
+                    modo = "Navegacao";
+                    manipulaInterface(modo);
                 } else {
-                    JOptionPane.showMessageDialog(rootPane, Mensagens._003());
+                    JOptionPane.showMessageDialog(rootPane, Mensagens._005());
                 }
-            }
-        } else {
-            JOptionPane.showMessageDialog(rootPane, Mensagens._001());
-        }
 
-        // Caso não queira validação de CPF e Data
-        //        if (modo.equals("Novo")) {
-            //            if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
-                //                tabelaClienteModelo.adicionaCliente(c);
-                //            } else {
-                //                JOptionPane.showMessageDialog(rootPane, Mensagens._001());
-                //            }
-            //        } else if (modo.equals("Editar")) {
-            //            tabelaClienteModelo.setValueAt(c, index);
-            //        }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, Mensagens._001());
+            }
+        }
+            
     }//GEN-LAST:event_jButtonSalvarActionPerformed
     
+    
+
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(() -> {
@@ -499,7 +469,7 @@ public class ManterEditora extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelTelefone;
     private javax.swing.JPanel jPanelPlanoDeFundoDados;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableTabelaClientes;
+    private javax.swing.JTable jTableTabelaEditoras;
     private javax.swing.JTextField jTextFieldBairro;
     private javax.swing.JTextField jTextFieldCidade;
     private javax.swing.JTextField jTextFieldEstado;
@@ -547,45 +517,34 @@ public class ManterEditora extends javax.swing.JFrame {
                 break;
         }
     }
-    
-    private boolean verificaRadioButtonSelecionado() {
-        return this.jRadioButtonFemenino.isSelected() || this.jRadioButtonMasculino.isSelected();
-    }
-    
+
     private boolean verificaCamposPreenchidos() {
-        return !(this.jTextFieldRazaoSocial.getText().isEmpty() 
-                && this.jTextFieldSobrenome.getText().isEmpty() 
+        return !(this.jTextFieldRazaoSocial.getText().isEmpty()
                 && this.jTextFieldRua.getText().isEmpty()
                 && this.jTextFieldBairro.getText().isEmpty()
                 && this.jTextFieldCidade.getText().isEmpty()
                 && this.jTextFieldEstado.getText().isEmpty()
                 && this.jTextFieldNumero.getText().isEmpty());
     }
-    
+
     private boolean verificaCamposFormatadosPreenchidos() {
         return !(this.jFormattedTextFieldCnpj.getText().equals("   .   .   -  ")
-                && this.jFormattedTextDataNasc.getText().equals("  /  /    ")
                 && this.jFormattedTextTelefone.getText().equals("(  )      -    "));
     }
-    
+
     private void habilitaCampoDados(boolean flag) {
         this.jPanelPlanoDeFundoDados.setEnabled(flag);
         this.jTextFieldRua.setEnabled(flag);
         this.jTextFieldRazaoSocial.setEnabled(flag);
-        this.jTextFieldSobrenome.setEnabled(flag);
         this.jTextFieldCidade.setEnabled(flag);
         this.jTextFieldBairro.setEnabled(flag);
         this.jTextFieldRua.setEnabled(flag);
         this.jTextFieldEstado.setEnabled(flag);
         this.jTextFieldNumero.setEnabled(flag);
         this.jFormattedTextTelefone.setEnabled(flag);
-        this.jFormattedTextDataNasc.setEnabled(flag);
         this.jFormattedTextFieldCnpj.setEnabled(flag);
         this.jLabelRua.setEnabled(flag);
         this.jLabelRazaoSocial.setEnabled(flag);
-        this.jLabelDataDeNasc.setEnabled(flag);
-        this.jLabelSexo.setEnabled(flag);
-        this.jLabelSobrenome.setEnabled(flag);
         this.jLabelTelefone.setEnabled(flag);
         this.jLabelCnpj.setEnabled(flag);
         this.jLabelRua.setEnabled(flag);
@@ -593,34 +552,28 @@ public class ManterEditora extends javax.swing.JFrame {
         this.jLabelBairro1.setEnabled(flag);
         this.jLabelNumero.setEnabled(flag);
         this.jLabelEstado.setEnabled(flag);
-        this.jRadioButtonFemenino.setEnabled(flag);
-        this.jRadioButtonMasculino.setEnabled(flag);
     }
-    
+
     private void habilitaBotoesTabela(boolean flag) {
         this.jButtonEditar.setEnabled(flag);
         this.jButtonExcluir.setEnabled(flag);
     }
-    
-    private void habilitaBotoesFormulario(boolean flag){
+
+    private void habilitaBotoesFormulario(boolean flag) {
         this.jButtonSalvar.setEnabled(flag);
         this.jButtonCancelar.setEnabled(flag);
         this.jButtonLimparCampos.setEnabled(flag);
     }
-    
+
     private void limpaCampos() {
         this.jTextFieldRua.setText(null);
         this.jTextFieldRazaoSocial.setText(null);
-        this.jTextFieldSobrenome.setText(null);
         this.jTextFieldCidade.setText(null);
         this.jTextFieldRua.setText(null);
         this.jTextFieldEstado.setText(null);
         this.jTextFieldNumero.setText(null);
         this.jTextFieldBairro.setText(null);
         this.jFormattedTextTelefone.setText(null);
-        this.jFormattedTextDataNasc.setText(null);
         this.jFormattedTextFieldCnpj.setText(null);
-        this.jRadioButtonFemenino.setSelected(false);
-        this.jRadioButtonMasculino.setSelected(false);
     }
 }

@@ -33,4 +33,8 @@ public class ControleEditora {
         return EditorasDAO.getInstance().buscar(nome);
     }
     
+    public ArrayList<EditorasBEAN>  buscarTodasEditoras(){
+        return EditorasDAO.getInstance().buscarTodos();
+    }
+    
 }
