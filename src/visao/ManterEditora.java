@@ -3,7 +3,7 @@ package visao;
 import controle.ControleCliente;
 import modelo.CPF;
 import javax.swing.JOptionPane;
-import modelo.TableModelCliente;
+import modelo.TableModelClientes;
 import modelo.ClientesBEAN;
 import modelo.Data;
 import modelo.Mensagens;
@@ -11,7 +11,7 @@ import modelo.Mensagens;
 public class ManterEditora extends javax.swing.JFrame {
     
     private String modo;
-    private TableModelCliente tabelaClienteModelo;
+    private TableModelClientes tabelaClienteModelo;
     private ControleCliente controle;
     private int index;
     
@@ -21,7 +21,7 @@ public class ManterEditora extends javax.swing.JFrame {
         controle = new ControleCliente();
         modo = "Navegacao";
         setLocationRelativeTo(null);
-        tabelaClienteModelo = new TableModelCliente(controle.buscarTodosClientes());
+        tabelaClienteModelo = new TableModelClientes(controle.buscarTodosClientes());
         this.jTableTabelaClientes.setModel(tabelaClienteModelo);
         manipulaInterface(modo);
     }

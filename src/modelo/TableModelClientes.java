@@ -8,7 +8,7 @@ package modelo;
 import java.util.ArrayList;
 import javax.swing.table.AbstractTableModel;
 
-public class TableModelCliente extends AbstractTableModel {
+public class TableModelClientes extends AbstractTableModel {
 
     private ArrayList<ClientesBEAN> linhas;
     private final String[] colunas = new String[]{
@@ -38,8 +38,12 @@ public class TableModelCliente extends AbstractTableModel {
         java.lang.Boolean.class
     };
 
-    public TableModelCliente() {
+    public TableModelClientes() {
         this.linhas = new ArrayList<>();
+    }
+    
+    public TableModelClientes(ArrayList<ClientesBEAN> linhas) {
+        this.linhas = linhas;
     }
 
     @Override
@@ -54,10 +58,6 @@ public class TableModelCliente extends AbstractTableModel {
         this.linhas.get(linha).setAtivo(!this.linhas.get(linha).isAtivo());
     }
 
-    public TableModelCliente(ArrayList<ClientesBEAN> linhas) {
-        this.linhas = linhas;
-    }
-
     public void adicionaCliente(ClientesBEAN c) {
         this.linhas.add(c);
         fireTableDataChanged();
@@ -69,7 +69,7 @@ public class TableModelCliente extends AbstractTableModel {
         //fireTableRowsDeleted(linha, linha);
     }
 
-    public ClientesBEAN getCleinte(int linha) {
+    public ClientesBEAN getCliente(int linha) {
         return this.linhas.get(linha);
     }
 
