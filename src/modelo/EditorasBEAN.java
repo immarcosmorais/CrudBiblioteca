@@ -4,6 +4,7 @@ package modelo;
 public class EditorasBEAN {
     private int id;
     private String razaoSocial;
+    private String cnpj;
     private String telefone;
     private String rua;
     private String bairro;
@@ -15,9 +16,10 @@ public class EditorasBEAN {
     public EditorasBEAN() {
     }
 
-    public EditorasBEAN(int id, String razaoSocial, String telefone, String rua, String bairro, String cidade, String estado, String numero, boolean ativo) {
+    public EditorasBEAN(int id, String razaoSocial, String cnpj, String telefone, String rua, String bairro, String cidade, String estado, String numero, boolean ativo) {
         this.id = id;
         this.razaoSocial = razaoSocial;
+        this.cnpj = cnpj;
         this.telefone = telefone;
         this.rua = rua;
         this.bairro = bairro;
@@ -41,6 +43,14 @@ public class EditorasBEAN {
 
     public void setRazaoSocial(String razaoSocial) {
         this.razaoSocial = razaoSocial;
+    }
+
+    public String getCnpj() {
+        return cnpj;
+    }
+
+    public void setCnpj(String cnpj) {
+        this.cnpj = cnpj;
     }
 
     public String getTelefone() {
@@ -98,4 +108,6 @@ public class EditorasBEAN {
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
     }
+    
+    
 }

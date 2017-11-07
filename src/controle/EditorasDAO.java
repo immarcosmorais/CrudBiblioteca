@@ -23,16 +23,18 @@ public class EditorasDAO {
     public long create(EditorasBEAN editora) {
         String query = "INSERT INTO EDITORAS ("
                 + "razao_social, "
+                + "cnpj, "
                 + "telefone, "
                 + "rua, "
                 + "bairro, "
                 + "cidade, "
                 + "estado, "
                 + "numero) "
-                + "values (?,?,?,?,?,?)";
+                + "values (?,?,?,?,?,?,?)";
 
         return MySQLDAO.executeQuery(query,
                 editora.getRazaoSocial(),
+                editora.getCnpj(),
                 editora.getTelefone(),
                 editora.getRua(),
                 editora.getBairro(),
@@ -46,6 +48,7 @@ public class EditorasDAO {
 
         String query = "UPDATE EDITORAS SET "
                 + "razao_social = ?, "
+                + "cnpj = ?, "
                 + "telefone = ?, "
                 + "rua = ?, "
                 + "bairro = ?, "
@@ -56,6 +59,7 @@ public class EditorasDAO {
 
         MySQLDAO.executeQuery(query,
                 editora.getRazaoSocial(),
+                editora.getCnpj(),
                 editora.getTelefone(),
                 editora.getRua(),
                 editora.getBairro(),
@@ -91,7 +95,8 @@ public class EditorasDAO {
             while (rs.next()) {
                 lista.add(new EditorasBEAN(
                         rs.getInt("id"), 
-                        rs.getString("razao_social"), 
+                        rs.getString("razao_social"),
+                        rs.getString("cnpj"),
                         rs.getString("telefone"), 
                         rs.getString("rua"),
                         rs.getString("bairro"),
@@ -118,7 +123,8 @@ public class EditorasDAO {
             while (rs.next()) {
                 lista.add(new EditorasBEAN(
                         rs.getInt("id"), 
-                        rs.getString("razao_social"), 
+                        rs.getString("razao_social"),
+                        rs.getString("cnpj"),
                         rs.getString("telefone"), 
                         rs.getString("rua"),
                         rs.getString("bairro"),

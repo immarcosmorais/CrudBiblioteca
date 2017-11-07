@@ -10,6 +10,7 @@ public class TableModelEditoras extends AbstractTableModel{
     private final String[] colunas = new String[]{
             "Id",
             "Razão Social",
+            "CNPJ",
             "Telefone",
             "Rua",
             "Bairro",
@@ -25,7 +26,7 @@ public class TableModelEditoras extends AbstractTableModel{
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if(columnIndex == 8){
+        if(columnIndex == 9){
             return Boolean.class;
         }
         return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
@@ -53,13 +54,14 @@ public class TableModelEditoras extends AbstractTableModel{
             switch(coluna){
                 case 0: return this.linhas.get(linha).getId();
                 case 1: return this.linhas.get(linha).getRazaoSocial();
-                case 2: return this.linhas.get(linha).getTelefone();
-                case 3: return this.linhas.get(linha).getRua();
-                case 4: return this.linhas.get(linha).getBairro();
-                case 5: return this.linhas.get(linha).getCidade();
-                case 6: return this.linhas.get(linha).getEstado();
-                case 7: return this.linhas.get(linha).getNumero();
-                case 8: return this.linhas.get(linha).isAtivo();
+                case 2: return this.linhas.get(linha).getCnpj();
+                case 3: return this.linhas.get(linha).getTelefone();
+                case 4: return this.linhas.get(linha).getRua();
+                case 5: return this.linhas.get(linha).getBairro();
+                case 6: return this.linhas.get(linha).getCidade();
+                case 7: return this.linhas.get(linha).getEstado();
+                case 8: return this.linhas.get(linha).getNumero();
+                case 9: return this.linhas.get(linha).isAtivo();
                 default: return  -1;
             }
         }
