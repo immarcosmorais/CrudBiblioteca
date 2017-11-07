@@ -22,7 +22,7 @@ public class ExcluiCliente {
                 "Femenino", 
                 true);
         
-        controle.deleteCliente(Cliente);
+        controle.deletaCliente(Cliente);
         
     }
 }

@@ -10,7 +10,7 @@ import modelo.Data;
 import modelo.Mensagens;
 
 public class ManterCliente extends javax.swing.JFrame {
-
+    
     private String modo;
     private TableModelCliente tabelaClienteModelo;
     private ControleCliente controle;
@@ -22,11 +22,11 @@ public class ManterCliente extends javax.swing.JFrame {
         controle = new ControleCliente();
         modo = "Navegacao";
         setLocationRelativeTo(null);
-        tabelaClienteModelo = new TableModelCliente(controle.listaCliente());
+        tabelaClienteModelo = new TableModelCliente(controle.buscarTodosClientes());
         this.jTableTabelaClientes.setModel(tabelaClienteModelo);
         manipulaInterface(modo);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -59,32 +59,12 @@ public class ManterCliente extends javax.swing.JFrame {
         setTitle("Manter Clientes ");
 
         jTableTabelaClientes.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jTableTabelaClientes.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Id", "Nome", "Sobrenome", "CPF", "Data de Nasç.", "Telefone", "Endereço", "Sexo", "Ativo"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.Boolean.class
-            };
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, true
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
         jTableTabelaClientes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableTabelaClientesMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTableTabelaClientesMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(jTableTabelaClientes);
@@ -305,21 +285,21 @@ public class ManterCliente extends javax.swing.JFrame {
         int i = JOptionPane.showConfirmDialog(rootPane, Mensagens._002() + tabelaClienteModelo.getValueAt(index, 1) + " " + tabelaClienteModelo.getValueAt(index, 2) + "?");
         if (i != JOptionPane.YES_OPTION) {
             if (i == JOptionPane.NO_OPTION) {
-
+                
             }
         } else {
             if (index > -1) {
-                controle.deleteCliente((int) jTableTabelaClientes.getValueAt(index, 0));
-                tabelaClienteModelo.setLinhas(controle.listaCliente());
+                controle.deletaCliente((int) jTableTabelaClientes.getValueAt(index, 0));
+                tabelaClienteModelo.setLinhas(controle.buscarTodosClientes());
                 limpaCampos();
             }
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-
+        
         index = this.jTableTabelaClientes.getSelectedRow();
-
+        
         String s = null;
         if (this.jRadioButtonFemenino.isSelected()) {
             s = "Femenino";
@@ -330,8 +310,9 @@ public class ManterCliente extends javax.swing.JFrame {
         CPF cpf = new CPF(this.jFormattedTextFieldCpf.getText());
         Data dataNasc = new Data(this.jFormattedTextDataNasc.getText() + " " + "00:00", Data.HifenSemHora);
         Data hoje = new Data();
+       
         
-        ClientesBEAN c = new ClientesBEAN((int) jTableTabelaClientes.getValueAt(index,0),
+        ClientesBEAN c = new ClientesBEAN((int) jTableTabelaClientes.getValueAt(index, 0),
                 this.jTextFieldNome.getText(),
                 this.jTextFieldSobrenome.getText(),
                 this.jFormattedTextFieldCpf.getText(),
@@ -340,13 +321,13 @@ public class ManterCliente extends javax.swing.JFrame {
                 this.jTextFieldEndereco.getText(),
                 s,
                 true);
-
+        
         if (this.verificaCamposFormatadosPreenchidos() && this.verificaCamposPreenchidos() && this.verificaRadioButtonSelecionado()) {
             if (modo.equals("Novo")) {
-                if (cpf.isCPF()) {  
+                if (cpf.isCPF()) {                    
                     if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
-                        controle.addCliente(c);
-                        tabelaClienteModelo.setLinhas(controle.listaCliente());
+                        controle.adicionaCliente(c);
+                        tabelaClienteModelo.setLinhas(controle.buscarTodosClientes());
                         limpaCampos();
                     } else {
                         JOptionPane.showMessageDialog(rootPane, Mensagens._004());
@@ -357,8 +338,8 @@ public class ManterCliente extends javax.swing.JFrame {
             } else if (modo.equals("Editar")) {
                 if (cpf.isCPF()) {
                     if (hoje.getTimestamp().getTime() > dataNasc.getTimestamp().getTime()) {
-                        controle.updateCliente(c);
-                        tabelaClienteModelo.setLinhas(controle.listaCliente());
+                        controle.atualizaCliente(c);
+                        tabelaClienteModelo.setLinhas(controle.buscarTodosClientes());
                         modo = "Navegacao";
                         manipulaInterface(modo);
                         limpaCampos();
@@ -392,7 +373,7 @@ public class ManterCliente extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonCancelarActionPerformed
 
     private void jTableTabelaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaClientesMouseClicked
-
+        
         index = this.jTableTabelaClientes.getSelectedRow();
 
         if (index > -1 && index < this.tabelaClienteModelo.getRowCount()) {
@@ -407,7 +388,7 @@ public class ManterCliente extends javax.swing.JFrame {
             this.jTextFieldEndereco.setText((String) tabelaClienteModelo.getValueAt(index, 6));
 
         }
-
+         
     }//GEN-LAST:event_jTableTabelaClientesMouseClicked
 
     private void jRadioButtonMasculinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMasculinoActionPerformed
@@ -418,12 +399,20 @@ public class ManterCliente extends javax.swing.JFrame {
         this.jRadioButtonMasculino.setSelected(false);
     }//GEN-LAST:event_jRadioButtonFemeninoActionPerformed
 
+    private void jTableTabelaClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaClientesMousePressed
+        
+        index = this.jTableTabelaClientes.getSelectedRow();
+        if (jTableTabelaClientes.getSelectedColumn() == 8) {
+            tabelaClienteModelo.inverteValor(jTableTabelaClientes.getSelectedRow());
+            controle.ativaCliente((boolean) jTableTabelaClientes.getValueAt(index, 8), (int) jTableTabelaClientes.getValueAt(index, 0));
+        }
+               
+    }//GEN-LAST:event_jTableTabelaClientesMousePressed
+    
     public static void main(String args[]) {
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ManterCliente().setVisible(true);
-            }
+        
+        java.awt.EventQueue.invokeLater(() -> {
+            new ManterCliente().setVisible(true);
         });
     }
 
@@ -485,21 +474,21 @@ public class ManterCliente extends javax.swing.JFrame {
                 break;
         }
     }
-
+    
     private boolean verificaRadioButtonSelecionado() {
         return this.jRadioButtonFemenino.isSelected() || this.jRadioButtonMasculino.isSelected();
     }
-
+    
     private boolean verificaCamposPreenchidos() {
         return !(this.jTextFieldNome.getText().isEmpty() && this.jTextFieldSobrenome.getText().isEmpty() && this.jTextFieldEndereco.getText().isEmpty());
     }
-
+    
     private boolean verificaCamposFormatadosPreenchidos() {
         return !(this.jFormattedTextFieldCpf.getText().equals("   .   .   -  ")
                 && this.jFormattedTextDataNasc.getText().equals("  /  /    ")
                 && this.jFormattedTextTelefone.getText().equals("(  )      -    "));
     }
-
+    
     private void habilitaCampoDados(boolean flag) {
         this.jPanelPlanoDeFundoDados.setEnabled(flag);
         this.jTextFieldEndereco.setEnabled(flag);
@@ -520,12 +509,12 @@ public class ManterCliente extends javax.swing.JFrame {
         this.jRadioButtonFemenino.setEnabled(flag);
         this.jRadioButtonMasculino.setEnabled(flag);
     }
-
+    
     private void habilitaBotoesEditarExcluir(boolean flag) {
         this.jButtonEditar.setEnabled(flag);
         this.jButtonExcluir.setEnabled(flag);
     }
-
+    
     private void limpaCampos() {
         this.jTextFieldEndereco.setText(null);
         this.jTextFieldNome.setText(null);

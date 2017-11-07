@@ -12,7 +12,7 @@ public class TableModelCliente extends AbstractTableModel {
 
     private ArrayList<ClientesBEAN> linhas;
     private final String[] colunas = new String[]{"Id", "Nome", "Sobrenome", "CPF", "Data Nasç.", "Telefone", "Endereço", "Sexo", "Ativo"};
-    
+
     Class[] types = new Class[]{
         java.lang.Integer.class,
         java.lang.String.class,
@@ -24,9 +24,21 @@ public class TableModelCliente extends AbstractTableModel {
         java.lang.String.class,
         java.lang.Boolean.class
     };
-    
+
     public TableModelCliente() {
         this.linhas = new ArrayList<>();
+    }
+
+    @Override
+    public Class<?> getColumnClass(int columnIndex) {
+        if (columnIndex == 8) {
+            return Boolean.class;
+        }
+        return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void inverteValor(int linha) {
+        this.linhas.get(linha).setAtivo(!this.linhas.get(linha).isAtivo());
     }
 
     public TableModelCliente(ArrayList<ClientesBEAN> linhas) {
@@ -83,17 +95,34 @@ public class TableModelCliente extends AbstractTableModel {
     @Override
     public Object getValueAt(int linha, int coluna) {
 
-        switch (coluna) {
-            case 0: return this.linhas.get(linha).getId();
-            case 1: return this.linhas.get(linha).getNome();
-            case 2: return this.linhas.get(linha).getSobrenome();
-            case 3: return this.linhas.get(linha).getCPF();
-            case 4: return this.linhas.get(linha).getDataNasc();
-            case 5: return this.linhas.get(linha).getTelefone();
-            case 6: return this.linhas.get(linha).getEndereco();
-            case 7: return this.linhas.get(linha).getSexo();
-            case 8: return this.linhas.get(linha).isAtivo();
-            default: return -1;
+        if (linha < 0) {
+            
+            return linha;
+            
+        } else {
+
+            switch (coluna) {
+                case 0:
+                    return this.linhas.get(linha).getId();
+                case 1:
+                    return this.linhas.get(linha).getNome();
+                case 2:
+                    return this.linhas.get(linha).getSobrenome();
+                case 3:
+                    return this.linhas.get(linha).getCPF();
+                case 4:
+                    return this.linhas.get(linha).getDataNasc();
+                case 5:
+                    return this.linhas.get(linha).getTelefone();
+                case 6:
+                    return this.linhas.get(linha).getEndereco();
+                case 7:
+                    return this.linhas.get(linha).getSexo();
+                case 8:
+                    return this.linhas.get(linha).isAtivo();
+                default:
+                    return -1;
+            }
         }
 
     }
@@ -105,12 +134,12 @@ public class TableModelCliente extends AbstractTableModel {
 
     @Override
     public boolean isCellEditable(int i, int i1) {
-        return super.isCellEditable(i, i1); //To change body of generated methods, choose Tools | Templates.
+        return true; //To change body of generated methods, choose Tools | Templates.
     }
 
     public void setLinhas(ArrayList<ClientesBEAN> linhas) {
         this.linhas = linhas;
         fireTableDataChanged();
     }
-    
+
 }

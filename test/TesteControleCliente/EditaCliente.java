@@ -19,7 +19,7 @@ public class EditaCliente {
                 "Femenino", 
                 true);
         
-        controle.updateCliente(Cliente);
+        controle.atualizaCliente(Cliente);
         
     }
     

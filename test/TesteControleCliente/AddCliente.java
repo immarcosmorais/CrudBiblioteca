@@ -24,6 +24,6 @@ public class AddCliente {
                 "Rua B", 
                 "Femenino", 
                 true);
-        controle.addCliente(Cliente);
+        controle.adicionaCliente(Cliente);
     }
 }

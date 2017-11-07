@@ -60,12 +60,16 @@ public class ClienteDAO {
     public void delete(int id) {
         MySQLDAO.executeQuery("DELETE FROM CLIENTES WHERE id = ?", id);
     }
+    
+    public void ativa(boolean flag, int id){
+        MySQLDAO.executeQuery("update clientes set ativo = ? where id = ?", flag , id);
+    }
 
-    public ArrayList<ClientesBEAN> findAllClientes() {
-        return listaClientes("select * from clientes order by id");
+    public ArrayList<ClientesBEAN> buscarTodos() {
+        return listarTodos("select * from clientes order by id");
     }
     
-    private ArrayList<ClientesBEAN> listaClientes(String query) {
+    private ArrayList<ClientesBEAN> listarTodos(String query) {
         ArrayList<ClientesBEAN> lista = new ArrayList<>();
         ResultSet rs = null;
         rs = MySQLDAO.getResultSet(query);
@@ -88,7 +92,7 @@ public class ClienteDAO {
         return lista;
     }
 
-    public ClientesBEAN findCliente(int id) {
+    public ClientesBEAN buscar(int id) {
         ClientesBEAN result = null;
         ResultSet rs = null;
         rs = MySQLDAO.getResultSet("SELECT * FROM CLIENTES WHERE id = ?", id);
@@ -110,7 +114,7 @@ public class ClienteDAO {
         return result;
     }
 
-    public int findId(ClientesBEAN cliente) {
+    public int buscar(ClientesBEAN cliente) {
         int result = 0;
         ResultSet rs = null;
         rs = MySQLDAO.getResultSet("SELECT * FROM CLIENTES WHERE nome = ? and sobrenome = ?", cliente.getNome(), cliente.getSobrenome());
