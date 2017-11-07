@@ -11,7 +11,20 @@ import javax.swing.table.AbstractTableModel;
 public class TableModelCliente extends AbstractTableModel {
 
     private ArrayList<ClientesBEAN> linhas;
-    private final String[] colunas = new String[]{"Id", "Nome", "Sobrenome", "CPF", "Data Nasç.", "Telefone", "Endereço", "Sexo", "Ativo"};
+    private final String[] colunas = new String[]{
+        "Id", 
+        "Nome", 
+        "Sobrenome", 
+        "CPF", 
+        "Data Nasç.", 
+        "Telefone", 
+        "Rua",
+        "Bairro",
+        "Cidade",
+        "Estado",
+        "Numero",
+        "Sexo",
+        "Ativo"};
 
     Class[] types = new Class[]{
         java.lang.Integer.class,
@@ -31,7 +44,7 @@ public class TableModelCliente extends AbstractTableModel {
 
     @Override
     public Class<?> getColumnClass(int columnIndex) {
-        if (columnIndex == 8) {
+        if (columnIndex == 12) {
             return Boolean.class;
         }
         return super.getColumnClass(columnIndex); //To change body of generated methods, choose Tools | Templates.
@@ -64,7 +77,11 @@ public class TableModelCliente extends AbstractTableModel {
         
         linhas.get(rowIndex).setCPF(aValue.getCPF());
         linhas.get(rowIndex).setDataNasc(aValue.getDataNasc());
-        linhas.get(rowIndex).setEndereco(aValue.getEndereco());
+        linhas.get(rowIndex).setRua(aValue.getRua());
+        linhas.get(rowIndex).setBairro(aValue.getBairro());
+        linhas.get(rowIndex).setCidade(aValue.getCidade());
+        linhas.get(rowIndex).setEstado(aValue.getEstado());
+        linhas.get(rowIndex).setNumero(aValue.getNumero());
         linhas.get(rowIndex).setNome(aValue.getNome());
         linhas.get(rowIndex).setSexo(aValue.getSexo());
         linhas.get(rowIndex).setSobrenome(aValue.getSobrenome());
@@ -80,6 +97,10 @@ public class TableModelCliente extends AbstractTableModel {
         fireTableCellUpdated(rowIndex, 6);
         fireTableCellUpdated(rowIndex, 7);
         fireTableCellUpdated(rowIndex, 8);
+        fireTableCellUpdated(rowIndex, 9);
+        fireTableCellUpdated(rowIndex, 10);
+        fireTableCellUpdated(rowIndex, 11);
+        fireTableCellUpdated(rowIndex, 12);
     }
 
     @Override
@@ -115,10 +136,18 @@ public class TableModelCliente extends AbstractTableModel {
                 case 5:
                     return this.linhas.get(linha).getTelefone();
                 case 6:
-                    return this.linhas.get(linha).getEndereco();
+                    return this.linhas.get(linha).getRua();
                 case 7:
-                    return this.linhas.get(linha).getSexo();
+                    return this.linhas.get(linha).getBairro();
                 case 8:
+                    return this.linhas.get(linha).getCidade();
+                case 9:
+                    return this.linhas.get(linha).getEstado();
+                case 10:
+                    return this.linhas.get(linha).getNumero();
+                case 11:
+                    return this.linhas.get(linha).getSexo();
+                case 12:
                     return this.linhas.get(linha).isAtivo();
                 default:
                     return -1;

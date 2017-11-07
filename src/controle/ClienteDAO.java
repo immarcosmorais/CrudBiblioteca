@@ -20,10 +20,37 @@ public class ClienteDAO {
         return instance;
     }
 
+    public void update(ClientesBEAN cliente) {
+        String query = "UPDATE CLIENTES SET "
+                + "nome = ?, "
+                + "sobrenome = ?, "
+                + "cpf = ?, "
+                + "data_nasc = ?, "
+                + "telefone = ?, "
+                + "rua = ?, "
+                + "bairro = ?, "
+                + "cidade = ?, "
+                + "estado = ?, "
+                + "numero = ?, "
+                + "sexo = ? "
+                + "where id = ?";
+        MySQLDAO.executeQuery(query, 
+                cliente.getNome(), 
+                cliente.getSobrenome(), 
+                cliente.getCPF(), 
+                cliente.getDataNasc(), 
+                cliente.getTelefone(), 
+                cliente.getRua(),
+                cliente.getBairro(),
+                cliente.getCidade(),
+                cliente.getEstado(),
+                cliente.getNumero(),
+                cliente.getSexo(),
+                cliente.getId());
+    }
+    
     public long create(ClientesBEAN cliente) {
-        
-        
-        
+
         String query = "INSERT INTO `clientes` ("
                 + "`nome`, "
                 + "`sobrenome`, "
@@ -37,7 +64,7 @@ public class ClienteDAO {
                 + "`numero`, "
                 + "`sexo`) "
                 + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
-        
+
         return MySQLDAO.executeQuery(query,
                 cliente.getNome(),
                 cliente.getSobrenome(),
@@ -52,51 +79,22 @@ public class ClienteDAO {
                 cliente.getSexo());
     }
 
-    public void update(ClientesBEAN cliente) {
-        String query = "UPDATE CLIENTES SET "
-                + "nome = ?, "
-                + "sobrenome = ?, "
-                + "cpf = ?, "
-                + "data_nasc = ?, "
-                + "telefone = ?, "
-                + "rua = ?,"
-                + "bairro = ?"
-                + "cidade = ?"
-                + "estado = ?"
-                + "numero = ?"
-                + "sexo = ? "
-                + "where id = ?";
-        MySQLDAO.executeQuery(query,
-                cliente.getNome(),
-                cliente.getSobrenome(),
-                cliente.getCPF(),
-                cliente.getDataNasc(),
-                cliente.getTelefone(),
-                cliente.getRua(),
-                cliente.getBairro(),
-                cliente.getCidade(),
-                cliente.getEstado(),
-                cliente.getEstado(),
-                cliente.getNumero(),
-                cliente.getSexo());
-    }
-
     public void delete(ClientesBEAN cliente) {
         MySQLDAO.executeQuery("DELETE FROM CLIENTES WHERE id = ?", cliente.getId());
     }
-    
+
     public void delete(int id) {
         MySQLDAO.executeQuery("DELETE FROM CLIENTES WHERE id = ?", id);
     }
-    
-    public void ativa(boolean flag, int id){
-        MySQLDAO.executeQuery("update clientes set ativo = ? where id = ?", flag , id);
+
+    public void ativa(boolean flag, int id) {
+        MySQLDAO.executeQuery("update clientes set ativo = ? where id = ?", flag, id);
     }
 
     public ArrayList<ClientesBEAN> buscarTodos() {
         return listarTodos("select * from clientes order by id");
     }
-    
+
     private ArrayList<ClientesBEAN> listarTodos(String query) {
         ArrayList<ClientesBEAN> lista = new ArrayList<>();
         ResultSet rs = null;
@@ -163,8 +161,8 @@ public class ClienteDAO {
         }
         return result;
     }
-    
-    public ArrayList<ClientesBEAN> buscar(String nome){
+
+    public ArrayList<ClientesBEAN> buscar(String nome) {
         ArrayList<ClientesBEAN> lista = new ArrayList<>();
         ResultSet rs = null;
         rs = MySQLDAO.getResultSet("select * from clientes where nome like '%" + nome + "%'");
@@ -188,7 +186,7 @@ public class ClienteDAO {
         } catch (SQLException e) {
             System.err.println("erro: " + e.getMessage());
         }
-        return  lista;
+        return lista;
     }
 
     public Boolean isExist(int id) {
