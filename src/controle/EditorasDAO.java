@@ -64,7 +64,6 @@ public class EditorasDAO {
                 editora.getBairro(),
                 editora.getCidade(),
                 editora.getEstado(),
-                editora.getEstado(),
                 editora.getNumero(),
                 editora.getId());
     }
@@ -103,7 +102,6 @@ public class EditorasDAO {
                         rs.getString("estado"),
                         rs.getString("numero"),
                         rs.getObject("ativo", Boolean.class)));
-                
 
             }
             rs.close();
@@ -117,22 +115,20 @@ public class EditorasDAO {
 
         ArrayList<EditorasBEAN> lista = new ArrayList<>();
         ResultSet rs = null;
-        rs = MySQLDAO.getResultSet("select * from editoras where nome like '%" + nome + "%'");
+        rs = MySQLDAO.getResultSet("select * from editoras where razao_social like '%" + nome + "%'");
         try {
             while (rs.next()) {
                 lista.add(new EditorasBEAN(
-                        rs.getInt("id"), 
-                        rs.getString("razao_social"),
-                        rs.getString("cnpj"),
-                        rs.getString("telefone"), 
-                        rs.getString("rua"),
-                        rs.getString("bairro"),
-                        rs.getString("cidade"), 
-                        rs.getString("estado"),
-                        rs.getString("numero"),
-                        rs.getObject("ativo", Boolean.class)));
-                
-
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getString(4), 
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7), 
+                        rs.getString(8),
+                        rs.getString(9),
+                        rs.getObject(10, Boolean.class)));  
             }
             rs.close();
         } catch (SQLException e) {

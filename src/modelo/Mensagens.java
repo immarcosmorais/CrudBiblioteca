@@ -17,7 +17,7 @@ public abstract class Mensagens {
      * Deseja escluir DEFINITIVAMENTE o Cliente: 
      */
     public static String _002(){
-        return "Deseja escluir DEFINITIVAMENTE o Cliente: ";
+        return "Deseja escluir DEFINITIVAMENTE o Cliente ";
     }
     
     /**
@@ -45,5 +45,9 @@ public abstract class Mensagens {
      */
     public static String _005() {
         return "CNPJ invalido!";
+    }
+
+    public static String _006() {
+        return "Deseja escluir DEFINITIVAMENTE a editora ";
     }
 }

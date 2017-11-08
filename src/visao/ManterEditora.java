@@ -1,6 +1,7 @@
 package visao;
 
 import controle.ControleEditora;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import modelo.CNPJ;
 import modelo.EditorasBEAN;
@@ -333,7 +334,7 @@ public class ManterEditora extends javax.swing.JFrame {
         modo = "Navegacao";
         manipulaInterface(modo);
         index = this.jTableTabelaEditoras.getSelectedRow();
-        int i = JOptionPane.showConfirmDialog(rootPane, Mensagens._002() + tabelaEditoraModelo.getValueAt(index, 1) + " " + tabelaEditoraModelo.getValueAt(index, 2) + "?");
+        int i = JOptionPane.showConfirmDialog(rootPane, Mensagens._006() + tabelaEditoraModelo.getValueAt(index, 1) +  " ?");
         if (i != JOptionPane.YES_OPTION) {
             if (i == JOptionPane.NO_OPTION) {
 
@@ -379,7 +380,8 @@ public class ManterEditora extends javax.swing.JFrame {
     }//GEN-LAST:event_jTableTabelaEditorasMousePressed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        tabelaEditoraModelo.setLinhas(controle.buscarEditora(jTextFieldPesquisar.getText()));
+        //tabelaEditoraModelo.setLinhas(controle.buscarEditora(jTextFieldPesquisar.getText()));
+        this.tabelaEditoraModelo.setLinhas(controle.buscarEditora(this.jTextFieldPesquisar.getText()));
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButtonLimaparPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimaparPesquisaActionPerformed
@@ -399,22 +401,19 @@ public class ManterEditora extends javax.swing.JFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 
         index = this.jTableTabelaEditoras.getSelectedRow();
-
         CNPJ cnpj = new CNPJ(this.jFormattedTextFieldCnpj.getText());
-
-//        EditorasBEAN e = new EditorasBEAN((int) jTableTabelaEditoras.getValueAt(index, 0),
-//                jTextFieldRazaoSocial.getText(),
-//                jFormattedTextFieldCnpj.getText(),
-//                jFormattedTextTelefone.getText(),
-//                jTextFieldRua.getText(),
-//                jTextFieldBairro.getText(),
-//                jTextFieldCidade.getText(),
-//                jTextFieldEstado.getText(),
-//                jTextFieldNumero.getText(),
-//                true);
         
-        EditorasBEAN e = new EditorasBEAN((int) jTableTabelaEditoras.getValueAt(index, 0), jTextFieldRazaoSocial.getText(), jFormattedTextFieldCnpj.getText(), jFormattedTextTelefone.getText(), jTextFieldRua.getText(), jTextFieldBairro.getText(), jTextFieldCidade.getText(), jTextFieldEstado.getText(), jTextFieldNumero.getText(), true);
-
+        EditorasBEAN e = new EditorasBEAN((int) jTableTabelaEditoras.getValueAt(index, 0),
+                jTextFieldRazaoSocial.getText(),
+                jFormattedTextFieldCnpj.getText(), 
+                jFormattedTextTelefone.getText(), 
+                jTextFieldRua.getText(),
+                jTextFieldBairro.getText(), 
+                jTextFieldCidade.getText(), 
+                jTextFieldEstado.getText(), 
+                jTextFieldNumero.getText(), 
+                true);
+        
         if (this.verificaCamposPreenchidos()) {
             if (modo.equals("Novo")) {
                 if (cnpj.isCNPJ()) {
@@ -426,7 +425,7 @@ public class ManterEditora extends javax.swing.JFrame {
                 }
             } else if (modo.equals("Editar")) {
                 if (cnpj.isCNPJ()) {
-                    controle.adicionaEditora(e);
+                    controle.atualizaEditora(e);
                     tabelaEditoraModelo.setLinhas(controle.buscarTodasEditoras());
                     limpaCampos();
                     modo = "Navegacao";
@@ -434,7 +433,6 @@ public class ManterEditora extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(rootPane, Mensagens._005());
                 }
-
             }
         }else{
             JOptionPane.showMessageDialog(rootPane, Mensagens._001());
