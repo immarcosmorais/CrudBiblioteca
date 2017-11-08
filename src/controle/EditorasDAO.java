@@ -21,16 +21,16 @@ public class EditorasDAO {
     }
 
     public long create(EditorasBEAN editora) {
-        String query = "INSERT INTO EDITORAS ("
-                + "razao_social, "
-                + "cnpj, "
-                + "telefone, "
-                + "rua, "
-                + "bairro, "
-                + "cidade, "
-                + "estado, "
-                + "numero) "
-                + "values (?,?,?,?,?,?,?)";
+        String query = "INSERT INTO `editoras` "
+                + "(`razao_social`, "
+                + "`cnpj`, "
+                + "`telefone`, "
+                + "`rua`, "
+                + "`bairro`, "
+                + "`cidade`, "
+                + "`estado`, "
+                + "`numero`) "
+                + "VALUES (?,?,?,?,?,?,?,?)";
 
         return MySQLDAO.executeQuery(query,
                 editora.getRazaoSocial(),
@@ -39,7 +39,6 @@ public class EditorasDAO {
                 editora.getRua(),
                 editora.getBairro(),
                 editora.getCidade(),
-                editora.getEstado(),
                 editora.getEstado(),
                 editora.getNumero());
     }

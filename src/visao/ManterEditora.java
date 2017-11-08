@@ -18,11 +18,11 @@ public class ManterEditora extends javax.swing.JFrame {
         initComponents();
         index = 1;
         controle = new ControleEditora();
-        modo = "Navegacao";
-        setLocationRelativeTo(null);
         tabelaEditoraModelo = new TableModelEditoras(controle.buscarTodasEditoras());
         this.jTableTabelaEditoras.setModel(tabelaEditoraModelo);
+        modo = "Navegacao";
         manipulaInterface(modo);
+        setLocationRelativeTo(null);
     }
 
     @SuppressWarnings("unchecked")
@@ -246,11 +246,12 @@ public class ManterEditora extends javax.swing.JFrame {
                     .addComponent(jTextFieldBairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelBairro))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelEstado)
-                    .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabelBairro1))
+                .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabelBairro1)
+                    .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jTextFieldEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabelEstado)
+                        .addComponent(jTextFieldCidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanelPlanoDeFundoDadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonCancelar)
@@ -355,13 +356,13 @@ public class ManterEditora extends javax.swing.JFrame {
             manipulaInterface(modo);
 
             this.jTextFieldRazaoSocial.setText((String) tabelaEditoraModelo.getValueAt(index, 1));
-            this.jFormattedTextFieldCnpj.setText((String) tabelaEditoraModelo.getValueAt(index, 3));
-            this.jFormattedTextTelefone.setText((String) tabelaEditoraModelo.getValueAt(index, 5));
-            this.jTextFieldRua.setText((String) tabelaEditoraModelo.getValueAt(index, 6));
-            this.jTextFieldBairro.setText((String) tabelaEditoraModelo.getValueAt(index, 7));
-            this.jTextFieldCidade.setText((String) tabelaEditoraModelo.getValueAt(index, 8));
-            this.jTextFieldEstado.setText((String) tabelaEditoraModelo.getValueAt(index, 9));
-            this.jTextFieldNumero.setText((String) tabelaEditoraModelo.getValueAt(index, 10));
+            this.jFormattedTextFieldCnpj.setText((String) tabelaEditoraModelo.getValueAt(index, 2));
+            this.jFormattedTextTelefone.setText((String) tabelaEditoraModelo.getValueAt(index, 3));
+            this.jTextFieldRua.setText((String) tabelaEditoraModelo.getValueAt(index, 4));
+            this.jTextFieldBairro.setText((String) tabelaEditoraModelo.getValueAt(index, 5));
+            this.jTextFieldCidade.setText((String) tabelaEditoraModelo.getValueAt(index, 6));
+            this.jTextFieldEstado.setText((String) tabelaEditoraModelo.getValueAt(index, 7));
+            this.jTextFieldNumero.setText((String) tabelaEditoraModelo.getValueAt(index, 8));
 
         }
 
@@ -370,9 +371,9 @@ public class ManterEditora extends javax.swing.JFrame {
     private void jTableTabelaEditorasMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableTabelaEditorasMousePressed
 
         index = this.jTableTabelaEditoras.getSelectedRow();
-        if (jTableTabelaEditoras.getSelectedColumn() == 12) {
+        if (jTableTabelaEditoras.getSelectedColumn() == 9) {
             tabelaEditoraModelo.inverteValor(jTableTabelaEditoras.getSelectedRow());
-            controle.ativaEditora((boolean) jTableTabelaEditoras.getValueAt(index, 12), (int) jTableTabelaEditoras.getValueAt(index, 0));
+            controle.ativaEditora((boolean) jTableTabelaEditoras.getValueAt(index, 9), (int) jTableTabelaEditoras.getValueAt(index, 0));
         }
 
     }//GEN-LAST:event_jTableTabelaEditorasMousePressed
@@ -401,16 +402,18 @@ public class ManterEditora extends javax.swing.JFrame {
 
         CNPJ cnpj = new CNPJ(this.jFormattedTextFieldCnpj.getText());
 
-        EditorasBEAN e = new EditorasBEAN((int) jTableTabelaEditoras.getValueAt(index, 0),
-                jTextFieldRazaoSocial.getText(),
-                jFormattedTextFieldCnpj.getText(),
-                jFormattedTextTelefone.getText(),
-                jTextFieldRua.getText(),
-                jTextFieldBairro.getText(),
-                jTextFieldCidade.getText(),
-                jTextFieldEstado.getText(),
-                jTextFieldNumero.getText(),
-                true);
+//        EditorasBEAN e = new EditorasBEAN((int) jTableTabelaEditoras.getValueAt(index, 0),
+//                jTextFieldRazaoSocial.getText(),
+//                jFormattedTextFieldCnpj.getText(),
+//                jFormattedTextTelefone.getText(),
+//                jTextFieldRua.getText(),
+//                jTextFieldBairro.getText(),
+//                jTextFieldCidade.getText(),
+//                jTextFieldEstado.getText(),
+//                jTextFieldNumero.getText(),
+//                true);
+        
+        EditorasBEAN e = new EditorasBEAN((int) jTableTabelaEditoras.getValueAt(index, 0), jTextFieldRazaoSocial.getText(), jFormattedTextFieldCnpj.getText(), jFormattedTextTelefone.getText(), jTextFieldRua.getText(), jTextFieldBairro.getText(), jTextFieldCidade.getText(), jTextFieldEstado.getText(), jTextFieldNumero.getText(), true);
 
         if (this.verificaCamposPreenchidos()) {
             if (modo.equals("Novo")) {
@@ -432,9 +435,9 @@ public class ManterEditora extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(rootPane, Mensagens._005());
                 }
 
-            } else {
-                JOptionPane.showMessageDialog(rootPane, Mensagens._001());
             }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, Mensagens._001());
         }
             
     }//GEN-LAST:event_jButtonSalvarActionPerformed
@@ -528,7 +531,7 @@ public class ManterEditora extends javax.swing.JFrame {
     }
 
     private boolean verificaCamposFormatadosPreenchidos() {
-        return !(this.jFormattedTextFieldCnpj.getText().equals("   .   .   -  ")
+        return !(this.jFormattedTextFieldCnpj.getText().equals("  .   .   /0001-  ")
                 && this.jFormattedTextTelefone.getText().equals("(  )      -    "));
     }
 

@@ -20,6 +20,10 @@ public class TableModelEditoras extends AbstractTableModel{
             "Ativo"
             };
 
+    public TableModelEditoras() {
+        linhas = new ArrayList<>();
+    }
+
     public TableModelEditoras(ArrayList<EditorasBEAN> linhas) {
         this.linhas = linhas;
     }
@@ -44,6 +48,11 @@ public class TableModelEditoras extends AbstractTableModel{
     @Override
     public int getColumnCount() {
         return this.colunas.length;
+    }
+
+    @Override
+    public String getColumnName(int coluna) {
+        return colunas[coluna];
     }
 
     @Override

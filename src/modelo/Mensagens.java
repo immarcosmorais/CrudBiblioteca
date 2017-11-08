@@ -38,6 +38,11 @@ public abstract class Mensagens {
         return "Data invalida! Data futura";
     }
     
+    /**
+     * 
+     * @return
+     * CNPJ invalido!
+     */
     public static String _005() {
         return "CNPJ invalido!";
     }

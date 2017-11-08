@@ -12,7 +12,7 @@ public class ManterCliente extends javax.swing.JFrame {
     
     private String modo;
     private TableModelClientes tabelaClienteModelo;
-    private ControleCliente controle;
+    private final ControleCliente controle;
     private int index;
     
     public ManterCliente() {
@@ -20,10 +20,10 @@ public class ManterCliente extends javax.swing.JFrame {
         index = 1;
         controle = new ControleCliente();
         modo = "Navegacao";
-        setLocationRelativeTo(null);
         tabelaClienteModelo = new TableModelClientes(controle.buscarTodosClientes());
         this.jTableTabelaClientes.setModel(tabelaClienteModelo);
         manipulaInterface(modo);
+        setLocationRelativeTo(null);
     }
     
     @SuppressWarnings("unchecked")

@@ -26,17 +26,17 @@ public class TableModelClientes extends AbstractTableModel {
         "Sexo",
         "Ativo"};
 
-    Class[] types = new Class[]{
-        java.lang.Integer.class,
-        java.lang.String.class,
-        java.lang.String.class,
-        java.lang.String.class,
-        java.lang.String.class,
-        java.lang.String.class,
-        java.lang.String.class,
-        java.lang.String.class,
-        java.lang.Boolean.class
-    };
+//    Class[] types = new Class[]{
+//        java.lang.Integer.class,
+//        java.lang.String.class,
+//        java.lang.String.class,
+//        java.lang.String.class,
+//        java.lang.String.class,
+//        java.lang.String.class,
+//        java.lang.String.class,
+//        java.lang.String.class,
+//        java.lang.Boolean.class
+//    };
 
     public TableModelClientes() {
         this.linhas = new ArrayList<>();
